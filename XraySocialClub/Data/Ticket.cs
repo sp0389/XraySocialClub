@@ -26,10 +26,10 @@
     public class TicketRecord
     {
         public int Id { get; set; }
-        public Ticket Ticket { get; set; } = default!;
         public int TicketId { get; set; }
-        public LottoMember Member { get; set; } = default!;
+        public Ticket Ticket { get; set; } = default!;
         public string MemberId { get; set; } = default!;
+        public LottoMember Member { get; set; } = default!;
         private TicketRecord() { }
         public TicketRecord(LottoMember member, Ticket ticket)
         {

@@ -12,7 +12,7 @@ using XraySocialClub.Data.Core;
 namespace XraySocialClub.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241209095816_InitCreate")]
+    [Migration("20241210065738_InitCreate")]
     partial class InitCreate
     {
         /// <inheritdoc />
@@ -50,6 +50,29 @@ namespace XraySocialClub.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "09adf476-7af7-4bd7-89e5-d173778b3ec9",
+                            ConcurrencyStamp = "fb519d60-4b07-469b-a11c-b7638a33b636",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "1455a748-82ad-4e31-bb41-7c72cfc0fbfa",
+                            ConcurrencyStamp = "71b21ea0-140f-40e9-b355-a3d015053eb9",
+                            Name = "Social",
+                            NormalizedName = "SOCIAL"
+                        },
+                        new
+                        {
+                            Id = "de1e5fe5-585b-4867-aae8-57776d64f330",
+                            ConcurrencyStamp = "71b21ea0-140f-40e9-b355-a3d015053eb9",
+                            Name = "Lotto",
+                            NormalizedName = "LOTTO"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -139,6 +162,23 @@ namespace XraySocialClub.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "ca32e0e5-46b8-4f44-9a97-0d685a2c54b2",
+                            RoleId = "09adf476-7af7-4bd7-89e5-d173778b3ec9"
+                        },
+                        new
+                        {
+                            UserId = "7610170e-d0e7-43b9-a289-02d13056d54e",
+                            RoleId = "1455a748-82ad-4e31-bb41-7c72cfc0fbfa"
+                        },
+                        new
+                        {
+                            UserId = "c6e5a515-b561-458a-85e6-ab9e7eed58f4",
+                            RoleId = "de1e5fe5-585b-4867-aae8-57776d64f330"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -250,6 +290,27 @@ namespace XraySocialClub.Migrations
                     b.HasDiscriminator<string>("member_type").HasValue("Member");
 
                     b.UseTphMappingStrategy();
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ca32e0e5-46b8-4f44-9a97-0d685a2c54b2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "3e098325-ba04-4578-8bd8-231bbf8dde66",
+                            Email = "a.admin@xraysocials.com.au",
+                            EmailConfirmed = true,
+                            FirstName = "Alice",
+                            LastName = "Admin",
+                            LockoutEnabled = false,
+                            NormalizedUserName = "A.ADMIN@XRAYSOCIALS.COM.AU",
+                            OrganisationId = 1,
+                            PasswordHash = "AQAAAAIAAYagAAAAEHsSevUsbVfCvzTrAPeOAJGAdLJXoClxNuG4OJyPozgYXexeGOqLXgnIxAZgTQTbfA==",
+                            PhoneNumberConfirmed = false,
+                            Registered = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            SecurityStamp = "M67EBX32EPBJDLSU75U3EA5SFKIR7MDP",
+                            TwoFactorEnabled = false,
+                            UserName = "a.admin@xraysocials.com.au"
+                        });
                 });
 
             modelBuilder.Entity("XraySocialClub.Data.Organisation", b =>
@@ -267,6 +328,13 @@ namespace XraySocialClub.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Organisations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "XraySocialClub"
+                        });
                 });
 
             modelBuilder.Entity("XraySocialClub.Data.Payment", b =>
@@ -360,6 +428,27 @@ namespace XraySocialClub.Migrations
                     b.HasBaseType("XraySocialClub.Data.Member");
 
                     b.HasDiscriminator().HasValue("member_lotto");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "c6e5a515-b561-458a-85e6-ab9e7eed58f4",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "36bea754-e167-42af-83ed-bd78392859f3",
+                            Email = "l.lotto@xraysocials.com.au",
+                            EmailConfirmed = true,
+                            FirstName = "Larry",
+                            LastName = "Lotto",
+                            LockoutEnabled = false,
+                            NormalizedUserName = "L.LOTTO@XRAYSOCIALS.COM.AU",
+                            OrganisationId = 1,
+                            PasswordHash = "AQAAAAIAAYagAAAAEGuoaNhuyNZDd/SdkB7dMyKO61l9hBzj4h26Bm6gmQpnrpwe+vNFNyBLSPj0JGM13Q==",
+                            PhoneNumberConfirmed = false,
+                            Registered = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            SecurityStamp = "ISWZYSPA6TIRY35DE4KKKESEPQZKL6VG",
+                            TwoFactorEnabled = false,
+                            UserName = "l.larry@xraysocials.com.au"
+                        });
                 });
 
             modelBuilder.Entity("XraySocialClub.Data.SocialMember", b =>
@@ -367,6 +456,27 @@ namespace XraySocialClub.Migrations
                     b.HasBaseType("XraySocialClub.Data.Member");
 
                     b.HasDiscriminator().HasValue("member_social");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "7610170e-d0e7-43b9-a289-02d13056d54e",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b2686cbb-099f-4c58-91a4-8fcb9c048d35",
+                            Email = "s.social@xraysocials.com.au",
+                            EmailConfirmed = true,
+                            FirstName = "Sarah",
+                            LastName = "Social",
+                            LockoutEnabled = false,
+                            NormalizedUserName = "SARAH.SOCIAL@XRAYSOCIALS.COM.AU",
+                            OrganisationId = 1,
+                            PasswordHash = "AQAAAAIAAYagAAAAENaAF8X3fgawsa7CT8EKV1Bm+PGcrq9PhRBL+ee6Rb8lCZVRf/6it+zEesnSHS6q1w==",
+                            PhoneNumberConfirmed = false,
+                            Registered = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            SecurityStamp = "LZOWMFVS2SAJIT7PFI3CPG4WQDCHQS5R",
+                            TwoFactorEnabled = false,
+                            UserName = "s.social@xraysocials.com.au"
+                        });
                 });
 
             modelBuilder.Entity("XraySocialClub.Data.LottoPayment", b =>

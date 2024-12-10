@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace XraySocialClub.Migrations
 {
     /// <inheritdoc />
@@ -251,6 +253,41 @@ namespace XraySocialClub.Migrations
                         principalTable: "Tickets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "09adf476-7af7-4bd7-89e5-d173778b3ec9", "fb519d60-4b07-469b-a11c-b7638a33b636", "Administrator", "ADMINISTRATOR" },
+                    { "1455a748-82ad-4e31-bb41-7c72cfc0fbfa", "71b21ea0-140f-40e9-b355-a3d015053eb9", "Social", "SOCIAL" },
+                    { "de1e5fe5-585b-4867-aae8-57776d64f330", "71b21ea0-140f-40e9-b355-a3d015053eb9", "Lotto", "LOTTO" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Organisations",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 1, "XraySocialClub" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganisationId", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Registered", "SecurityStamp", "TwoFactorEnabled", "UserName", "member_type" },
+                values: new object[,]
+                {
+                    { "7610170e-d0e7-43b9-a289-02d13056d54e", 0, "b2686cbb-099f-4c58-91a4-8fcb9c048d35", "s.social@xraysocials.com.au", true, "Sarah", "Social", false, null, null, "SARAH.SOCIAL@XRAYSOCIALS.COM.AU", 1, "AQAAAAIAAYagAAAAENaAF8X3fgawsa7CT8EKV1Bm+PGcrq9PhRBL+ee6Rb8lCZVRf/6it+zEesnSHS6q1w==", null, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "LZOWMFVS2SAJIT7PFI3CPG4WQDCHQS5R", false, "s.social@xraysocials.com.au", "member_social" },
+                    { "c6e5a515-b561-458a-85e6-ab9e7eed58f4", 0, "36bea754-e167-42af-83ed-bd78392859f3", "l.lotto@xraysocials.com.au", true, "Larry", "Lotto", false, null, null, "L.LOTTO@XRAYSOCIALS.COM.AU", 1, "AQAAAAIAAYagAAAAEGuoaNhuyNZDd/SdkB7dMyKO61l9hBzj4h26Bm6gmQpnrpwe+vNFNyBLSPj0JGM13Q==", null, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "ISWZYSPA6TIRY35DE4KKKESEPQZKL6VG", false, "l.larry@xraysocials.com.au", "member_lotto" },
+                    { "ca32e0e5-46b8-4f44-9a97-0d685a2c54b2", 0, "3e098325-ba04-4578-8bd8-231bbf8dde66", "a.admin@xraysocials.com.au", true, "Alice", "Admin", false, null, null, "A.ADMIN@XRAYSOCIALS.COM.AU", 1, "AQAAAAIAAYagAAAAEHsSevUsbVfCvzTrAPeOAJGAdLJXoClxNuG4OJyPozgYXexeGOqLXgnIxAZgTQTbfA==", null, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "M67EBX32EPBJDLSU75U3EA5SFKIR7MDP", false, "a.admin@xraysocials.com.au", "Member" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[,]
+                {
+                    { "1455a748-82ad-4e31-bb41-7c72cfc0fbfa", "7610170e-d0e7-43b9-a289-02d13056d54e" },
+                    { "de1e5fe5-585b-4867-aae8-57776d64f330", "c6e5a515-b561-458a-85e6-ab9e7eed58f4" },
+                    { "09adf476-7af7-4bd7-89e5-d173778b3ec9", "ca32e0e5-46b8-4f44-9a97-0d685a2c54b2" }
                 });
 
             migrationBuilder.CreateIndex(

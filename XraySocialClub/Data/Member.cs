@@ -2,14 +2,15 @@
 
 namespace XraySocialClub.Data
 {
-    public abstract class Member : IdentityUser
+    public class Member : IdentityUser
     {
         public string FirstName { get; set; } = default!;
         public string LastName { get; set; } = default!;
         public DateTime Registered { get; set; }
         public int OrganisationId { get; set; }
         public Organisation Organisation { get; set; } = default!;
-        protected Member() { }
+        // TODO: public for seeding data for now -- change later
+        public Member() { }
         public Member(int organisationId, string firstName, string lastName, string email)
         {
             OrganisationId = organisationId;
@@ -22,7 +23,8 @@ namespace XraySocialClub.Data
     public class SocialMember : Member
     {
         public ICollection<SocialPayment> SocialPayments { get; set; } = new List<SocialPayment>();
-        protected SocialMember() { }
+        //TODO: public to seed data for now -- change later
+        public SocialMember() { }
         public SocialMember(int organisationId, string firstName, string lastName, string email) : base(organisationId, firstName, lastName, email) { }
     }
 
@@ -30,7 +32,8 @@ namespace XraySocialClub.Data
     {
         public ICollection<LottoPayment> LottoPayments { get; set; } = new List<LottoPayment>();
         public ICollection<TicketRecord> TicketRecords { get; set; } = new List<TicketRecord>();
-        protected LottoMember() { }
+        //TODO: public to seed data for now -- change later
+        public LottoMember() { }
         public LottoMember(int organisationId, string firstName, string lastName, string email) : base(organisationId, firstName, lastName, email) { }
     }
 }

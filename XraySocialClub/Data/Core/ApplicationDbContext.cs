@@ -17,6 +17,7 @@ namespace XraySocialClub.Data.Core
         {
             base.OnModelCreating(builder);
             new EntityMapper(builder);
+            new Seed(builder);
         }
     }
 }
