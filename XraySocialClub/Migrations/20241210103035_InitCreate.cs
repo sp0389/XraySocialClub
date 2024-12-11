@@ -236,14 +236,14 @@ namespace XraySocialClub.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TicketId = table.Column<int>(type: "int", nullable: false),
-                    MemberId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Lotto_MemberId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TicketRecords", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TicketRecords_AspNetUsers_MemberId",
-                        column: x => x.MemberId,
+                        name: "FK_TicketRecords_AspNetUsers_Lotto_MemberId",
+                        column: x => x.Lotto_MemberId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -252,7 +252,7 @@ namespace XraySocialClub.Migrations
                         column: x => x.TicketId,
                         principalTable: "Tickets",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -262,7 +262,7 @@ namespace XraySocialClub.Migrations
                 {
                     { "09adf476-7af7-4bd7-89e5-d173778b3ec9", "fb519d60-4b07-469b-a11c-b7638a33b636", "Administrator", "ADMINISTRATOR" },
                     { "1455a748-82ad-4e31-bb41-7c72cfc0fbfa", "71b21ea0-140f-40e9-b355-a3d015053eb9", "Social", "SOCIAL" },
-                    { "de1e5fe5-585b-4867-aae8-57776d64f330", "71b21ea0-140f-40e9-b355-a3d015053eb9", "Lotto", "LOTTO" }
+                    { "de1e5fe5-585b-4867-aae8-57776d64f330", "47e5d7e3-4c5c-4e94-aaa2-7bf8a0f1505a", "Lotto", "LOTTO" }
                 });
 
             migrationBuilder.InsertData(
@@ -345,9 +345,9 @@ namespace XraySocialClub.Migrations
                 column: "SocialPayment_MemberId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TicketRecords_MemberId",
+                name: "IX_TicketRecords_Lotto_MemberId",
                 table: "TicketRecords",
-                column: "MemberId");
+                column: "Lotto_MemberId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TicketRecords_TicketId",

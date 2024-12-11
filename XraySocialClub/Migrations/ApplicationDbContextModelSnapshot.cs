@@ -66,7 +66,7 @@ namespace XraySocialClub.Migrations
                         new
                         {
                             Id = "de1e5fe5-585b-4867-aae8-57776d64f330",
-                            ConcurrencyStamp = "71b21ea0-140f-40e9-b355-a3d015053eb9",
+                            ConcurrencyStamp = "47e5d7e3-4c5c-4e94-aaa2-7bf8a0f1505a",
                             Name = "Lotto",
                             NormalizedName = "LOTTO"
                         });
@@ -406,7 +406,8 @@ namespace XraySocialClub.Migrations
 
                     b.Property<string>("MemberId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("Lotto_MemberId");
 
                     b.Property<int>("TicketId")
                         .HasColumnType("int");
@@ -575,9 +576,9 @@ namespace XraySocialClub.Migrations
                         .IsRequired();
 
                     b.HasOne("XraySocialClub.Data.Ticket", "Ticket")
-                        .WithMany()
+                        .WithMany("TicketRecords")
                         .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Member");
@@ -605,6 +606,11 @@ namespace XraySocialClub.Migrations
                         .IsRequired();
 
                     b.Navigation("Member");
+                });
+
+            modelBuilder.Entity("XraySocialClub.Data.Ticket", b =>
+                {
+                    b.Navigation("TicketRecords");
                 });
 
             modelBuilder.Entity("XraySocialClub.Data.LottoMember", b =>

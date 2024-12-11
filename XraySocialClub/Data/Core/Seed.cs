@@ -48,7 +48,7 @@ namespace XraySocialClub.Data.Core
                     Id = "de1e5fe5-585b-4867-aae8-57776d64f330",
                     Name = "Lotto",
                     NormalizedName = "LOTTO",
-                    ConcurrencyStamp = "71b21ea0-140f-40e9-b355-a3d015053eb9",
+                    ConcurrencyStamp = "47e5d7e3-4c5c-4e94-aaa2-7bf8a0f1505a",
                 }
             );
         }

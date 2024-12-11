@@ -59,6 +59,22 @@ namespace XraySocialClub.Data.Core
                 .WithOne(sp => sp.Member)
                 .HasForeignKey(sp => sp.MemberId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            mb.Entity<TicketRecord>(tr => 
+            {
+                tr.HasOne(tr => tr.Member)
+                .WithMany(m => m.TicketRecords)
+                .HasForeignKey(tr => tr.MemberId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                tr.HasOne(tr => tr.Ticket)
+                .WithMany(t => t.TicketRecords)
+                .HasForeignKey(tr => tr.TicketId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                tr.Property(tr => tr.MemberId)
+                .HasColumnName("Lotto_MemberId");
+            });
         }
     }
 }

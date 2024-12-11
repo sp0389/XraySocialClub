@@ -13,6 +13,7 @@
         public DateTime DrawDate { get; set; }
         public string Notes { get; set; } = default!;
         public TicketType TicketType { get; set; }
+        public ICollection<TicketRecord> TicketRecords { get; set; } = new List<TicketRecord>();
         private Ticket() { }
         public Ticket(string drawNumber, DateTime drawDate, string notes, TicketType ticketType)
         {
@@ -33,6 +34,8 @@
         private TicketRecord() { }
         public TicketRecord(LottoMember member, Ticket ticket)
         {
+            Member = member;
+            Ticket =  ticket;
             MemberId = member.Id;
             TicketId = ticket.Id;
         }
