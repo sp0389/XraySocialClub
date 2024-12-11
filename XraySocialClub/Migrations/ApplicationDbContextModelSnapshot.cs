@@ -199,7 +199,32 @@ namespace XraySocialClub.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("XraySocialClub.Data.Member", b =>
+            modelBuilder.Entity("XraySocialClub.Data.Organisation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Organisations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "XraySocialClub"
+                        });
+                });
+
+            modelBuilder.Entity("XraySocialClub.Data.OrganisationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -210,6 +235,11 @@ namespace XraySocialClub.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("nvarchar(21)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -265,11 +295,6 @@ namespace XraySocialClub.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("member_type")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -284,54 +309,9 @@ namespace XraySocialClub.Migrations
 
                     b.ToTable("AspNetUsers", (string)null);
 
-                    b.HasDiscriminator<string>("member_type").HasValue("Member");
+                    b.HasDiscriminator().HasValue("OrganisationUser");
 
                     b.UseTphMappingStrategy();
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "ca32e0e5-46b8-4f44-9a97-0d685a2c54b2",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "3e098325-ba04-4578-8bd8-231bbf8dde66",
-                            Email = "a.admin@xraysocials.com.au",
-                            EmailConfirmed = true,
-                            FirstName = "Alice",
-                            LastName = "Admin",
-                            LockoutEnabled = false,
-                            NormalizedUserName = "A.ADMIN@XRAYSOCIALS.COM.AU",
-                            OrganisationId = 1,
-                            PasswordHash = "AQAAAAIAAYagAAAAEHsSevUsbVfCvzTrAPeOAJGAdLJXoClxNuG4OJyPozgYXexeGOqLXgnIxAZgTQTbfA==",
-                            PhoneNumberConfirmed = false,
-                            Registered = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SecurityStamp = "M67EBX32EPBJDLSU75U3EA5SFKIR7MDP",
-                            TwoFactorEnabled = false,
-                            UserName = "a.admin@xraysocials.com.au"
-                        });
-                });
-
-            modelBuilder.Entity("XraySocialClub.Data.Organisation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Organisations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "XraySocialClub"
-                        });
                 });
 
             modelBuilder.Entity("XraySocialClub.Data.Payment", b =>
@@ -352,19 +332,19 @@ namespace XraySocialClub.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PaymentType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("payment_type")
+                    b.Property<string>("Payment_Type")
                         .IsRequired()
                         .HasMaxLength(21)
                         .HasColumnType("nvarchar(21)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.ToTable("Payments");
 
-                    b.HasDiscriminator<string>("payment_type").HasValue("Payment");
+                    b.HasDiscriminator<string>("Payment_Type").HasValue("Payment");
 
                     b.UseTphMappingStrategy();
                 });
@@ -388,7 +368,7 @@ namespace XraySocialClub.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TicketType")
+                    b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -407,7 +387,7 @@ namespace XraySocialClub.Migrations
                     b.Property<string>("MemberId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
-                        .HasColumnName("Lotto_MemberId");
+                        .HasColumnName("MemberId");
 
                     b.Property<int>("TicketId")
                         .HasColumnType("int");
@@ -421,13 +401,32 @@ namespace XraySocialClub.Migrations
                     b.ToTable("TicketRecords");
                 });
 
-            modelBuilder.Entity("XraySocialClub.Data.LottoMember", b =>
+            modelBuilder.Entity("XraySocialClub.Data.Member", b =>
                 {
-                    b.HasBaseType("XraySocialClub.Data.Member");
+                    b.HasBaseType("XraySocialClub.Data.OrganisationUser");
 
-                    b.HasDiscriminator().HasValue("member_lotto");
+                    b.HasDiscriminator().HasValue("Member");
 
                     b.HasData(
+                        new
+                        {
+                            Id = "ca32e0e5-46b8-4f44-9a97-0d685a2c54b2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "3e098325-ba04-4578-8bd8-231bbf8dde66",
+                            Email = "a.admin@xraysocials.com.au",
+                            EmailConfirmed = true,
+                            FirstName = "Alice",
+                            LastName = "Admin",
+                            LockoutEnabled = false,
+                            NormalizedUserName = "A.ADMIN@XRAYSOCIALS.COM.AU",
+                            OrganisationId = 1,
+                            PasswordHash = "AQAAAAIAAYagAAAAEHsSevUsbVfCvzTrAPeOAJGAdLJXoClxNuG4OJyPozgYXexeGOqLXgnIxAZgTQTbfA==",
+                            PhoneNumberConfirmed = false,
+                            Registered = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            SecurityStamp = "M67EBX32EPBJDLSU75U3EA5SFKIR7MDP",
+                            TwoFactorEnabled = false,
+                            UserName = "a.admin@xraysocials.com.au"
+                        },
                         new
                         {
                             Id = "c6e5a515-b561-458a-85e6-ab9e7eed58f4",
@@ -446,16 +445,7 @@ namespace XraySocialClub.Migrations
                             SecurityStamp = "ISWZYSPA6TIRY35DE4KKKESEPQZKL6VG",
                             TwoFactorEnabled = false,
                             UserName = "l.larry@xraysocials.com.au"
-                        });
-                });
-
-            modelBuilder.Entity("XraySocialClub.Data.SocialMember", b =>
-                {
-                    b.HasBaseType("XraySocialClub.Data.Member");
-
-                    b.HasDiscriminator().HasValue("member_social");
-
-                    b.HasData(
+                        },
                         new
                         {
                             Id = "7610170e-d0e7-43b9-a289-02d13056d54e",
@@ -484,11 +474,11 @@ namespace XraySocialClub.Migrations
                     b.Property<string>("MemberId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
-                        .HasColumnName("LottoPayment_MemberId");
+                        .HasColumnName("LP_MemberId");
 
                     b.HasIndex("MemberId");
 
-                    b.HasDiscriminator().HasValue("payment_lotto");
+                    b.HasDiscriminator().HasValue("Payment_Lotto");
                 });
 
             modelBuilder.Entity("XraySocialClub.Data.SocialPayment", b =>
@@ -498,11 +488,11 @@ namespace XraySocialClub.Migrations
                     b.Property<string>("MemberId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
-                        .HasColumnName("SocialPayment_MemberId");
+                        .HasColumnName("SP_MemberId");
 
                     b.HasIndex("MemberId");
 
-                    b.HasDiscriminator().HasValue("payment_social");
+                    b.HasDiscriminator().HasValue("Payment_Social");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -516,7 +506,7 @@ namespace XraySocialClub.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("XraySocialClub.Data.Member", null)
+                    b.HasOne("XraySocialClub.Data.OrganisationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -525,7 +515,7 @@ namespace XraySocialClub.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("XraySocialClub.Data.Member", null)
+                    b.HasOne("XraySocialClub.Data.OrganisationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -540,7 +530,7 @@ namespace XraySocialClub.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("XraySocialClub.Data.Member", null)
+                    b.HasOne("XraySocialClub.Data.OrganisationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -549,14 +539,14 @@ namespace XraySocialClub.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("XraySocialClub.Data.Member", null)
+                    b.HasOne("XraySocialClub.Data.OrganisationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("XraySocialClub.Data.Member", b =>
+            modelBuilder.Entity("XraySocialClub.Data.OrganisationUser", b =>
                 {
                     b.HasOne("XraySocialClub.Data.Organisation", "Organisation")
                         .WithMany()
@@ -569,7 +559,7 @@ namespace XraySocialClub.Migrations
 
             modelBuilder.Entity("XraySocialClub.Data.TicketRecord", b =>
                 {
-                    b.HasOne("XraySocialClub.Data.LottoMember", "Member")
+                    b.HasOne("XraySocialClub.Data.Member", "Member")
                         .WithMany("TicketRecords")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -588,7 +578,7 @@ namespace XraySocialClub.Migrations
 
             modelBuilder.Entity("XraySocialClub.Data.LottoPayment", b =>
                 {
-                    b.HasOne("XraySocialClub.Data.LottoMember", "Member")
+                    b.HasOne("XraySocialClub.Data.Member", "Member")
                         .WithMany("LottoPayments")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -599,7 +589,7 @@ namespace XraySocialClub.Migrations
 
             modelBuilder.Entity("XraySocialClub.Data.SocialPayment", b =>
                 {
-                    b.HasOne("XraySocialClub.Data.SocialMember", "Member")
+                    b.HasOne("XraySocialClub.Data.Member", "Member")
                         .WithMany("SocialPayments")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -613,16 +603,13 @@ namespace XraySocialClub.Migrations
                     b.Navigation("TicketRecords");
                 });
 
-            modelBuilder.Entity("XraySocialClub.Data.LottoMember", b =>
+            modelBuilder.Entity("XraySocialClub.Data.Member", b =>
                 {
                     b.Navigation("LottoPayments");
 
-                    b.Navigation("TicketRecords");
-                });
-
-            modelBuilder.Entity("XraySocialClub.Data.SocialMember", b =>
-                {
                     b.Navigation("SocialPayments");
+
+                    b.Navigation("TicketRecords");
                 });
 #pragma warning restore 612, 618
         }

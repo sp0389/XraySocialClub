@@ -3,8 +3,6 @@
     public enum PaymentType
     {
         Cash,
-        CreditCard,
-        EFTPOS,
         BankTransfer
     }
 
@@ -13,14 +11,14 @@
         public int Id { get; set; }
         public decimal Amount { get; set; }
         public DateTime DatePaid { get; set; }
-        public PaymentType PaymentType { get; set; }
+        public PaymentType Type { get; set; }
         public string Notes { get; set; } = default!;
         protected Payment() { }
-        public Payment(decimal amount, DateTime datePaid, PaymentType paymentType, string notes)
+        public Payment(decimal amount, DateTime datePaid, PaymentType type, string notes)
         {
             Amount = amount;
             DatePaid = datePaid;
-            PaymentType = paymentType;
+            Type = type;
             Notes = notes;
         }
     }
@@ -29,8 +27,8 @@
     {
         protected LottoPayment() { }
         public string MemberId { get; set; } = default!;
-        public LottoMember Member { get; set; } = default!;
-        public LottoPayment(LottoMember member, decimal amount, DateTime datePaid, PaymentType paymentType, string notes) : base(amount, datePaid, paymentType, notes)
+        public Member Member { get; set; } = default!;
+        public LottoPayment(Member member, decimal amount, DateTime datePaid, PaymentType type, string notes) : base(amount, datePaid, type, notes)
         {
             MemberId = member.Id;
         }
@@ -40,8 +38,8 @@
     {
         protected SocialPayment() { }
         public string MemberId { get; set; } = default!;
-        public SocialMember Member { get; set; } = default!;
-        public SocialPayment(SocialMember member, decimal amount, DateTime datePaid, PaymentType paymentType, string notes) : base(amount, datePaid, paymentType, notes)
+        public Member Member { get; set; } = default!;
+        public SocialPayment(Member member, decimal amount, DateTime datePaid, PaymentType type, string notes) : base(amount, datePaid, type, notes)
         {
             MemberId = member.Id;
         }

@@ -2,16 +2,15 @@
 
 namespace XraySocialClub.Data
 {
-    public class Member : IdentityUser
+    public class OrganisationUser : IdentityUser
     {
         public string FirstName { get; set; } = default!;
         public string LastName { get; set; } = default!;
         public DateTime Registered { get; set; }
         public int OrganisationId { get; set; }
         public Organisation Organisation { get; set; } = default!;
-        // TODO: public for seeding data for now -- change later
-        public Member() { }
-        public Member(int organisationId, string firstName, string lastName, string email)
+        protected OrganisationUser() { }
+        public OrganisationUser(int organisationId, string firstName, string lastName, string email)
         {
             OrganisationId = organisationId;
             FirstName = firstName;
@@ -20,20 +19,13 @@ namespace XraySocialClub.Data
         }
     }
 
-    public class SocialMember : Member
+    public class Member : OrganisationUser
     {
         public ICollection<SocialPayment> SocialPayments { get; set; } = new List<SocialPayment>();
-        //TODO: public to seed data for now -- change later
-        public SocialMember() { }
-        public SocialMember(int organisationId, string firstName, string lastName, string email) : base(organisationId, firstName, lastName, email) { }
-    }
-
-    public class LottoMember : Member
-    {
         public ICollection<LottoPayment> LottoPayments { get; set; } = new List<LottoPayment>();
         public ICollection<TicketRecord> TicketRecords { get; set; } = new List<TicketRecord>();
         //TODO: public to seed data for now -- change later
-        public LottoMember() { }
-        public LottoMember(int organisationId, string firstName, string lastName, string email) : base(organisationId, firstName, lastName, email) { }
+        public Member() { }
+        public Member(int organisationId, string firstName, string lastName, string email) : base(organisationId, firstName, lastName, email) { }
     }
 }

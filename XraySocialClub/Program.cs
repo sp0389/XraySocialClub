@@ -17,7 +17,7 @@ namespace XraySocialClub
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<Member>(o =>
+            builder.Services.AddDefaultIdentity<OrganisationUser>(o =>
             {
                 o.SignIn.RequireConfirmedAccount = false;
                 o.Password.RequireDigit = false;
@@ -50,10 +50,13 @@ namespace XraySocialClub
             app.UseAuthorization();
 
             app.MapStaticAssets();
+
+            app.MapControllerRoute(name: "areas", pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
+
             app.MapRazorPages()
                .WithStaticAssets();
 

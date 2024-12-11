@@ -3,8 +3,8 @@
 @* @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager *@
 
-@inject SignInManager<Member> SignInManager
-@inject UserManager<Member> UserManager
+@inject SignInManager<OrganisationUser> SignInManager
+@inject UserManager<OrganisationUser> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))

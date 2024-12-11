@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace XraySocialClub.Data.Core
 {
-    public class ApplicationDbContext : IdentityDbContext<Member>
+    public class ApplicationDbContext : IdentityDbContext<OrganisationUser>
     {
         public DbSet<Organisation> Organisations { get; set; }
         public DbSet<Payment> Payments { get; set; }
@@ -16,8 +16,8 @@ namespace XraySocialClub.Data.Core
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            new EntityMapper(builder);
-            new Seed(builder);
+            _ = new EntityMapper(builder);
+            _ = new Seed(builder);
         }
     }
 }

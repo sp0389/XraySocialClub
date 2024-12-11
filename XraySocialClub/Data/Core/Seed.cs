@@ -74,11 +74,8 @@ namespace XraySocialClub.Data.Core
                     TwoFactorEnabled = false,
                     LockoutEnabled = false,
                     AccessFailedCount = 0,
-                }
-            );
-
-            mb.Entity<LottoMember>().HasData(
-                new LottoMember
+                },
+                new Member
                 {
                     Id = "c6e5a515-b561-458a-85e6-ab9e7eed58f4",
                     UserName = "l.larry@xraysocials.com.au",
@@ -96,10 +93,8 @@ namespace XraySocialClub.Data.Core
                     TwoFactorEnabled = false,
                     LockoutEnabled = false,
                     AccessFailedCount = 0,
-                }
-            );
-            mb.Entity<SocialMember>().HasData(
-                new SocialMember
+                },
+                new Member
                 {
                     Id = "7610170e-d0e7-43b9-a289-02d13056d54e",
                     UserName = "s.social@xraysocials.com.au",

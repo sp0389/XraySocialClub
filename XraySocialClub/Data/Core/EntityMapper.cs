@@ -8,13 +8,15 @@ namespace XraySocialClub.Data.Core
         {
             mb.Entity<Organisation>(o =>
             {
-                o.Property(o => o.Name).IsRequired();
+                o.Property(o => o.Name)
+                .IsRequired()
+                .HasMaxLength(50);
             });
 
             mb.Entity<Payment>()
-                .HasDiscriminator<string>("payment_type")
-                .HasValue<SocialPayment>("payment_social")
-                .HasValue<LottoPayment>("payment_lotto");
+                .HasDiscriminator<string>("Payment_Type")
+                .HasValue<SocialPayment>("Payment_Social")
+                .HasValue<LottoPayment>("Payment_Lotto");
 
             mb.Entity<SocialPayment>(sp =>
             {
@@ -23,7 +25,7 @@ namespace XraySocialClub.Data.Core
                 .HasForeignKey(sp => sp.MemberId)
                 .OnDelete(DeleteBehavior.Restrict);
                 sp.Property(sp => sp.MemberId)
-                .HasColumnName("SocialPayment_MemberId");
+                .HasColumnName("SP_MemberId");
             });
 
             mb.Entity<LottoPayment>(lp =>
@@ -33,32 +35,26 @@ namespace XraySocialClub.Data.Core
                 .HasForeignKey(lp => lp.MemberId)
                 .OnDelete(DeleteBehavior.Restrict);
                 lp.Property(sp => sp.MemberId)
-                .HasColumnName("LottoPayment_MemberId");
+                .HasColumnName("LP_MemberId");
             });
 
-            mb.Entity<Member>()
-                .HasDiscriminator<string>("member_type")
-                .HasValue<SocialMember>("member_social")
-                .HasValue<LottoMember>("member_lotto");
-
-            mb.Entity<LottoMember>(lm =>
+            mb.Entity<Member>(m =>
             {
-                lm.HasMany(lm => lm.LottoPayments)
-                  .WithOne(lp => lp.Member)
-                  .HasForeignKey(lp => lp.MemberId)
-                  .OnDelete(DeleteBehavior.Restrict);
+                m.HasMany(m => m.LottoPayments)
+                .WithOne(lp => lp.Member)
+                .HasForeignKey(lp => lp.MemberId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-                lm.HasMany(lm => lm.TicketRecords)
-                  .WithOne(tr => tr.Member)
-                  .HasForeignKey(tr => tr.MemberId)
-                  .OnDelete(DeleteBehavior.Restrict); 
-            });
+                m.HasMany(m => m.TicketRecords)
+                .WithOne(tr => tr.Member)
+                .HasForeignKey(tr => tr.MemberId)
+                .OnDelete(DeleteBehavior.Restrict); 
 
-            mb.Entity<SocialMember>()
-                .HasMany(sm => sm.SocialPayments)
+                m.HasMany(sm => sm.SocialPayments)
                 .WithOne(sp => sp.Member)
                 .HasForeignKey(sp => sp.MemberId)
                 .OnDelete(DeleteBehavior.Restrict);
+            });
 
             mb.Entity<TicketRecord>(tr => 
             {
@@ -73,7 +69,7 @@ namespace XraySocialClub.Data.Core
                 .OnDelete(DeleteBehavior.Restrict);
 
                 tr.Property(tr => tr.MemberId)
-                .HasColumnName("Lotto_MemberId");
+                .HasColumnName("MemberId");
             });
         }
     }
