@@ -2,20 +2,22 @@
 
 namespace XraySocialClub.Data
 {
-    public class OrganisationUser : IdentityUser
+    public abstract class OrganisationUser : IdentityUser
     {
         public string FirstName { get; set; } = default!;
         public string LastName { get; set; } = default!;
         public DateTime Registered { get; set; }
         public int OrganisationId { get; set; }
         public Organisation Organisation { get; set; } = default!;
+        public Role Role { get; set; }
         protected OrganisationUser() { }
-        public OrganisationUser(int organisationId, string firstName, string lastName, string email)
+        public OrganisationUser(int organisationId, string firstName, string lastName, string email, Role? role)
         {
             OrganisationId = organisationId;
             FirstName = firstName;
             LastName = lastName;
             Email = email;
+            Role = role ?? Role.Pending;
         }
     }
 
@@ -26,6 +28,6 @@ namespace XraySocialClub.Data
         public ICollection<TicketRecord> TicketRecords { get; set; } = new List<TicketRecord>();
         //TODO: public to seed data for now -- change later
         public Member() { }
-        public Member(int organisationId, string firstName, string lastName, string email) : base(organisationId, firstName, lastName, email) { }
+        public Member(int organisationId, string firstName, string lastName, string email, Role? role) : base(organisationId, firstName, lastName, email, role) { }
     }
 }

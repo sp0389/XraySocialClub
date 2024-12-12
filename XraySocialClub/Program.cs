@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using XraySocialClub.Data;
 using XraySocialClub.Data.Core;
+using XraySocialClub.Services;
 
 namespace XraySocialClub
 {
@@ -29,6 +30,7 @@ namespace XraySocialClub
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
+            builder.Services.AddOrganisationServices();
 
             var app = builder.Build();
 
