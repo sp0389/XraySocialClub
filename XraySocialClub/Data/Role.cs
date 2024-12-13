@@ -3,6 +3,7 @@
     public enum Role
     {
         Pending,
+        Administrator,
         Social,
         Lotto
     }
