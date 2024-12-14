@@ -5,10 +5,10 @@ namespace XraySocialClub.Data.Core
 {
     public class ApplicationDbContext : IdentityDbContext<OrganisationUser>
     {
-        public DbSet<Organisation> Organisations { get; set; }
-        public DbSet<Payment> Payments { get; set; }
-        public DbSet<Ticket> Tickets { get; set; }
-        public DbSet<TicketRecord> TicketRecords { get; set; }
+        public required DbSet<Organisation> Organisations { get; set; }
+        public required DbSet<Payment> Payments { get; set; }
+        public required DbSet<Ticket> Tickets { get; set; }
+        public required DbSet<TicketRecord> TicketRecords { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

@@ -11,9 +11,10 @@ namespace XraySocialClub.Data
         public Organisation Organisation { get; set; } = default!;
         public Role Role { get; set; }
         protected OrganisationUser() { }
-        public OrganisationUser(int organisationId, string firstName, string lastName, string email, Role? role)
+        public OrganisationUser(int organisationId, string username, string firstName, string lastName, string email, Role? role)
         {
             OrganisationId = organisationId;
+            UserName = username;
             FirstName = firstName;
             LastName = lastName;
             Email = email;
@@ -28,6 +29,21 @@ namespace XraySocialClub.Data
         public ICollection<TicketRecord> TicketRecords { get; set; } = new List<TicketRecord>();
         //TODO: public to seed data for now -- change later
         public Member() { }
-        public Member(int organisationId, string firstName, string lastName, string email, Role? role) : base(organisationId, firstName, lastName, email, role) { }
+        
+        public Member(int organisationId, string username, string firstName, string lastName, string email, Role? role) : base(organisationId, username, firstName, lastName, email, role) { }
+        
+        public SocialPayment NewSocialPayment(decimal amount, DateTime datePaid, PaymentType type, string notes)
+        {
+            var socialPayment = new SocialPayment(this, amount, datePaid, type, notes);
+            SocialPayments.Add(socialPayment);
+            return socialPayment;
+        }
+
+        public LottoPayment NewLottoPayment(decimal amount, DateTime datePaid, PaymentType type, string notes)
+        {
+            var lottoPayment = new LottoPayment(this, amount, datePaid, type, notes);
+            LottoPayments.Add(lottoPayment);
+            return lottoPayment;
+        }
     }
 }
