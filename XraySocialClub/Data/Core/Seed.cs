@@ -49,6 +49,14 @@ namespace XraySocialClub.Data.Core
                     Name = "Lotto",
                     NormalizedName = "LOTTO",
                     ConcurrencyStamp = "47e5d7e3-4c5c-4e94-aaa2-7bf8a0f1505a",
+                },
+
+                new IdentityRole
+                {
+                    Id = "497fcc8d-a4b1-4fc9-a0d8-9ae50af3cb54",
+                    Name = "Pending",
+                    NormalizedName = "PENDING",
+                    ConcurrencyStamp = "a06787ff-9d57-49de-8d44-5262eec5ad3b"
                 }
             );
         }
