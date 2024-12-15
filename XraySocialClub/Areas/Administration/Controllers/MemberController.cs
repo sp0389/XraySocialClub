@@ -1,4 +1,5 @@
-﻿using XraySocialClub.Data.Core;
+﻿using Microsoft.AspNetCore.Mvc;
+using XraySocialClub.Data.Core;
 using XraySocialClub.Services;
 
 namespace XraySocialClub.Areas.Administration.Controllers
@@ -10,6 +11,23 @@ namespace XraySocialClub.Areas.Administration.Controllers
             : base(context, logger)
         {
             _organisationService = organisationService;
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> Index(bool? isLotto)
+        {
+            switch (isLotto)
+            {
+                case true:
+                    var lottoMembers = await _organisationService.GetLottoMembersAsync();
+                    return View(lottoMembers);
+                case false:
+                    var socialMembers = await _organisationService.GetSocialMembersAsync();
+                    return View(socialMembers);
+                default:
+                    var members = await _organisationService.GetAllMembersAsync();
+                    return View(members);
+            }
         }
     }
 }

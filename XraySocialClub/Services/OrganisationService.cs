@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Mapster;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using XraySocialClub.Areas.Administration.Models;
 using XraySocialClub.Data;
 using XraySocialClub.Data.Core;
 
@@ -34,24 +36,28 @@ namespace XraySocialClub.Services
             throw new ApplicationException(result.Errors.First().Description);
         }
 
-        public async Task <IEnumerable<Member>> GetAllMembersAsync()
+        public async Task <IEnumerable<MemberViewModel>> GetAllMembersAsync()
         {
-            var members = await _context.Users.OfType<Member>().ToListAsync();
+            var members = await _context.Users.OfType<Member>()
+                .ProjectToType<MemberViewModel>()
+                .ToListAsync();
             return members;
         }
 
-        public async Task <IEnumerable<Member>> GetSocialMembersAsync()
+        public async Task <IEnumerable<MemberViewModel>> GetSocialMembersAsync()
         {
             var socialMembers = await _context.Users.OfType<Member>()
                 .Where(sm => sm.Role == Role.Social)
+                .ProjectToType<MemberViewModel>()
                 .ToListAsync();
             return socialMembers;
         }
 
-        public async Task <IEnumerable<Member>> GetLottoMembersAsync()
+        public async Task <IEnumerable<MemberViewModel>> GetLottoMembersAsync()
         {
             var lottoMembers = await _context.Users.OfType<Member>()
                 .Where(lm =>  lm.Role == Role.Lotto)
+                .ProjectToType<MemberViewModel>()
                 .ToListAsync();
             return lottoMembers;
         }

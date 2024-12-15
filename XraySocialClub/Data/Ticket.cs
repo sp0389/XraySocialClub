@@ -12,6 +12,7 @@
         public string DrawNumber { get; set; } = default!;
         public DateTime DrawDate { get; set; }
         public string Notes { get; set; } = default!;
+        public decimal Price { get; set; }
         public TicketType Type { get; set; }
         public ICollection<TicketRecord> TicketRecords { get; set; } = new List<TicketRecord>();
         private Ticket() { }
