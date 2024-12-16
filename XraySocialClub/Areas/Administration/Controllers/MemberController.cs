@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using XraySocialClub.Areas.Administration.Models;
 using XraySocialClub.Data.Core;
 using XraySocialClub.Services;
 
@@ -28,6 +29,30 @@ namespace XraySocialClub.Areas.Administration.Controllers
                     var members = await _organisationService.GetAllMembersAsync();
                     return View(members);
             }
+        }
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel m)
+        {
+            if(ModelState.IsValid)
+            {
+                try
+                {
+                    var member = await _organisationService.RegisterMemberAsync(1, m.FirstName!, m.LastName!, m.Email!, m.Role);
+                    return RedirectToAction("Index");
+                }
+                catch (ApplicationException ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+            return View(m);
         }
     }
 }

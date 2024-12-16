@@ -1,17 +1,16 @@
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using XraySocialClub.Data;
 
 namespace XraySocialClub.Areas.Administration.Models;
 
 public class RegisterViewModel
 {
-    [Required]
+    [Required(ErrorMessage = "A First Name Is Required."), MaxLength(25)]
     public string? FirstName { get; set; }
-    [Required]
+    [Required(ErrorMessage = "A Last Name Is Required."), MaxLength(25)]
     public string? LastName { get; set; }
-    [Required]
+    [Required(ErrorMessage = "An Email Address Is Required."), MaxLength(50)]
     public string? Email { get; set; }
-    [Required]
-    public string? Role { get; set; }
-    public IEnumerable<SelectListItem> Roles { get; set; } = new List<SelectListItem>();  
+    [Required(ErrorMessage = "A Role Is Required.")]
+    public Role? Role { get; set; }
 }
