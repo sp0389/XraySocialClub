@@ -61,5 +61,22 @@ namespace XraySocialClub.Services
                 .ToListAsync();
             return lottoMembers;
         }
+
+        public async Task <IEnumerable<string>> GetUserRolesAsync(Member member)
+        {
+            if (member == null)
+            {
+                throw new ApplicationException("Member does not exist.");
+            }
+
+            var roles = await _userManager.GetRolesAsync(member);
+            return roles;    
+        }
+
+        public async Task<Member> GetMemberByIdAsync(string id)
+        {
+            var member = await _userManager.FindByIdAsync(id) ?? throw new ApplicationException("No member was found with that ID.");
+            return (Member)member;
+        }
     }
 }

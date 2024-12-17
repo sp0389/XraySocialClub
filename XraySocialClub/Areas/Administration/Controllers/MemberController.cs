@@ -54,5 +54,30 @@ namespace XraySocialClub.Areas.Administration.Controllers
             }
             return View(m);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            try
+            {
+                var member = await _organisationService.GetMemberByIdAsync(id);
+
+                var evm = new EditViewModel()
+                {
+                    FirstName = member.FirstName,
+                    LastName = member.LastName,
+                    Email = member.Email ?? "Not available",
+                    Role = member.Role,
+                    Roles = await _organisationService.GetUserRolesAsync(member)
+                };
+
+                return View(evm);
+            }
+            catch(ApplicationException ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

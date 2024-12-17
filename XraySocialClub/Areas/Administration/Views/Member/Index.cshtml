@@ -1,5 +1,4 @@
-﻿@using XraySocialClub.Areas.Administration.Models;
-@model IEnumerable<MemberViewModel>
+﻿@model IEnumerable<MemberViewModel>
 
 @{
   ViewData["Title"] = "Members";
@@ -29,7 +28,7 @@
         <td>@m.FirstName</td>
         <td>@m.LastName</td>
         <td>@m.Role.ToString()</td>
-        <td><a href="#">Update</a> | <a href="#">Payment</a></td>
+        <td><a href="@Url.Action("Edit", "Member", new { id = m.Id })" class="link-underline-primary">Update</a>| <a href="@Url.Action("Payment", "Member", new { id = m.Id })"class="link-underline-primary" role="button">Payment</a></td>
       </tr>
     }
   </tbody>
