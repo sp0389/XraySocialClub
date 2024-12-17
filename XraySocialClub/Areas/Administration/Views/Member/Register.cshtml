@@ -1,37 +1,38 @@
-﻿@using XraySocialClub.Areas.Administration.Models
-@model RegisterViewModel
+﻿@model RegisterViewModel
 
 @{
     ViewData["Title"] = "Register Member";
 }
-<h1>@ViewData["Title"]</h1>
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold">@ViewData["Title"]</h1>
+</div>
 
-<form asp-action="Register" method="post">
+<form asp-action="Register" method="post" class="card p-4 shadow-lg">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    
-    <div class="mb-3">
-        <label asp-for="FirstName" class="form-label">First Name</label>
-        <input asp-for="FirstName" class="form-control" />
+
+    <div class="form-floating mb-3">
+        <input asp-for="FirstName" class="form-control" id="floatingInput">
+        <label asp-for="FirstName">First Name</label>
         <span asp-validation-for="FirstName" class="text-danger"></span>
     </div>
 
-    <div class="mb-3">
-        <label asp-for="LastName" class="form-label">Last Name</label>
-        <input asp-for="LastName" class="form-control" />
+    <div class="form-floating mb-3">
+        <input asp-for="LastName" class="form-control" id="floatingInput">
+        <label asp-for="LastName">Last Name</label>
         <span asp-validation-for="LastName" class="text-danger"></span>
     </div>
 
-    <div class="mb-3">
-        <label asp-for="Email" class="form-label">Email</label>
-        <input asp-for="Email" class="form-control" />
+    <div class="form-floating mb-3">
+        <input asp-for="Email" type="email" class="form-control" id="floatingInput">
+        <label asp-for="Email">Email Address</label>
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
 
-    <select asp-for="Role"
-            class="form-control mb-3"
+    <div class="form-floating mb-3">
+        <select class="form-select" id="floatingSelect" aria-label="Role Select" asp-for="Role"
             asp-items="Html.GetEnumSelectList<Role>()">
-        <option>Select Role</option>
-    </select>
-
+        </select>
+        <label for="floatingSelect">Role</label>
+    </div>
     <button type="submit" class="btn btn-primary">Register</button>
 </form>

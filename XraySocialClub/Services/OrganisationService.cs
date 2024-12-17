@@ -16,7 +16,6 @@ namespace XraySocialClub.Services
         {
             _context = context;
             _userManager = userManager;
-            
         }
 
         public async Task<Member> RegisterMemberAsync(int organisationId, string firstName, string lastName, string email, Role? role, string password = "1")
@@ -26,25 +25,18 @@ namespace XraySocialClub.Services
             var member = organisation.RegisterMember(organisation.Id, firstName, lastName, email, role);
             var result = await _userManager.CreateAsync(member, password);
 
-            if (!role.HasValue)
-            {
-                await _userManager.AddToRoleAsync(member, Role.Pending.ToString());
-            }
-            else
-            {
-                await _userManager.AddToRoleAsync(member, role.Value.ToString());
-            }
+            await _userManager.AddToRoleAsync(member, role!.Value.ToString());
 
             if (result.Succeeded)
             {
                 await _context.SaveChangesAsync();
                 return member;
             }
-            
+
             throw new ApplicationException(result.Errors.First().Description);
         }
 
-        public async Task <IEnumerable<MemberViewModel>> GetAllMembersAsync()
+        public async Task<IEnumerable<MemberViewModel>> GetAllMembersAsync()
         {
             var members = await _context.Users.OfType<Member>()
                 .ProjectToType<MemberViewModel>()
@@ -52,7 +44,7 @@ namespace XraySocialClub.Services
             return members;
         }
 
-        public async Task <IEnumerable<MemberViewModel>> GetSocialMembersAsync()
+        public async Task<IEnumerable<MemberViewModel>> GetSocialMembersAsync()
         {
             var socialMembers = await _context.Users.OfType<Member>()
                 .Where(sm => sm.Role == Role.Social)
@@ -61,10 +53,10 @@ namespace XraySocialClub.Services
             return socialMembers;
         }
 
-        public async Task <IEnumerable<MemberViewModel>> GetLottoMembersAsync()
+        public async Task<IEnumerable<MemberViewModel>> GetLottoMembersAsync()
         {
             var lottoMembers = await _context.Users.OfType<Member>()
-                .Where(lm =>  lm.Role == Role.Lotto)
+                .Where(lm => lm.Role == Role.Lotto)
                 .ProjectToType<MemberViewModel>()
                 .ToListAsync();
             return lottoMembers;

@@ -4,6 +4,7 @@
     {
         Pending,
         Social,
-        Lotto
+        Lotto,
+        Administrator
     }
 }
