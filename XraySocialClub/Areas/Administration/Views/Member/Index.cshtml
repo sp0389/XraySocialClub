@@ -16,7 +16,7 @@
       <th scope="col">ID</th>
       <th scope="col">First Name</th>
       <th scope="col">Last Name</th>
-      <th scope="col">Role</th>
+      <th scope="col">Email Address</th>
       <th scope="col">Administration</th>
     </tr>
   </thead>
@@ -27,8 +27,8 @@
         <th scope="row">@m.Id</th>
         <td>@m.FirstName</td>
         <td>@m.LastName</td>
-        <td>@m.Role.ToString()</td>
-        <td><a href="@Url.Action("Edit", "Member", new { id = m.Id })" class="link-underline-primary">Update</a>| <a href="@Url.Action("Payment", "Member", new { id = m.Id })"class="link-underline-primary" role="button">Payment</a></td>
+        <td>@m.Email</td>
+        <td><a href="@Url.Action("Edit", "Member", new { id = m.Id })" class="link-underline-primary">Update</a> | <a href="@Url.Action("Payment", "Member", new { id = m.Id })"class="link-underline-primary" role="button">Payment</a></td>
       </tr>
     }
   </tbody>

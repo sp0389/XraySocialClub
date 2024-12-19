@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using XraySocialClub.Areas.Administration.Models;
+using XraySocialClub.Data;
 using XraySocialClub.Data.Core;
 using XraySocialClub.Services;
 
@@ -44,14 +45,16 @@ namespace XraySocialClub.Areas.Administration.Controllers
             {
                 try
                 {
-                    var member = await _organisationService.RegisterMemberAsync(1, m.FirstName!, m.LastName!, m.Email!, m.Role);
+                    await _organisationService.RegisterMemberAsync(1, m.FirstName!, m.LastName!, m.Email!, m.Role);
                     return RedirectToAction("Index");
                 }
+
                 catch (ApplicationException ex)
                 {
                     ModelState.AddModelError("", ex.Message);
                 }
             }
+
             return View(m);
         }
 
@@ -62,8 +65,9 @@ namespace XraySocialClub.Areas.Administration.Controllers
             {
                 var member = await _organisationService.GetMemberByIdAsync(id);
 
-                var evm = new EditViewModel()
+                var m = new EditViewModel()
                 {
+                    Id = member.Id,
                     FirstName = member.FirstName,
                     LastName = member.LastName,
                     Email = member.Email ?? "Not available",
@@ -71,13 +75,59 @@ namespace XraySocialClub.Areas.Administration.Controllers
                     Roles = await _organisationService.GetUserRolesAsync(member)
                 };
 
-                return View(evm);
+                return View(m);
             }
+
             catch(ApplicationException ex)
             {
                 TempData["Error"] = ex.Message;
             }
+
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditViewModel m)
+        {
+            var member = new Member();
+
+            try
+            {
+                member = await _organisationService.GetMemberByIdAsync(m.Id);
+                
+                if (m.RoleName != null && m.RemoveRole == true)
+                {
+                    await _organisationService.RemoveMemberFromRoleAsync(member, m.RoleName);
+                }
+            }
+
+            catch(ApplicationException ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+
+            if (ModelState.IsValid)
+            {
+                member.FirstName = m.FirstName!;
+                member.LastName = m.LastName!;
+                member.Email = m.Email;
+                member.Role = m.Role!.Value;
+                
+                try
+                {
+                    await _organisationService.UpdateMemberDetailsAsync(member);
+                    await _organisationService.AddMemberToRoleAsync(member, member.Role);  
+                }
+
+                catch (ApplicationException ex)
+                {
+                    TempData["Error"] = ex.Message;
+                }
+            }
+
+            TempData["Success"] = "Member Details Updated Sucessfully.";
+            
+            return RedirectToAction("Edit");
         }
     }
 }

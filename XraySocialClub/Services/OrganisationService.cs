@@ -27,13 +27,11 @@ namespace XraySocialClub.Services
 
             await _userManager.AddToRoleAsync(member, role!.Value.ToString());
 
-            if (result.Succeeded)
-            {
-                await _context.SaveChangesAsync();
-                return member;
+            if (!result.Succeeded)
+            {            
+                throw new ApplicationException(result.Errors.First().Description);
             }
-
-            throw new ApplicationException(result.Errors.First().Description);
+            return member;
         }
 
         public async Task<IEnumerable<MemberViewModel>> GetAllMembersAsync()
@@ -73,10 +71,40 @@ namespace XraySocialClub.Services
             return roles;    
         }
 
+        public async Task RemoveMemberFromRoleAsync(Member member, string roleName)
+        {
+            var result = await _userManager.RemoveFromRoleAsync(member, roleName);
+
+            if (!result.Succeeded)
+            {
+                throw new ApplicationException(result.Errors.First().Description);
+            }
+        }
+
+        public async Task AddMemberToRoleAsync(Member member, Role role)
+        {
+            var result = await _userManager.AddToRoleAsync(member, role.ToString());
+
+            if (!result.Succeeded)
+            {
+                throw new ApplicationException(result.Errors.First().Description);
+            }
+        }
+
         public async Task<Member> GetMemberByIdAsync(string id)
         {
             var member = await _userManager.FindByIdAsync(id) ?? throw new ApplicationException("No member was found with that ID.");
             return (Member)member;
+        }
+
+        public async Task UpdateMemberDetailsAsync(Member member)
+        {
+            var result = await _userManager.UpdateAsync(member);
+
+            if (!result.Succeeded)
+            {
+                throw new ApplicationException(result.Errors.First().Description);
+            }
         }
     }
 }

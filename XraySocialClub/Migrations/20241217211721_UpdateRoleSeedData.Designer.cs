@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using XraySocialClub.Data.Core;
 
@@ -11,9 +12,11 @@ using XraySocialClub.Data.Core;
 namespace XraySocialClub.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241217211721_UpdateRoleSeedData")]
+    partial class UpdateRoleSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -221,7 +224,7 @@ namespace XraySocialClub.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Organisations", (string)null);
+                    b.ToTable("Organisations");
 
                     b.HasData(
                         new
@@ -352,7 +355,7 @@ namespace XraySocialClub.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Payments", (string)null);
+                    b.ToTable("Payments");
 
                     b.HasDiscriminator<string>("Payment_Type").HasValue("Payment");
 
@@ -386,7 +389,7 @@ namespace XraySocialClub.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tickets", (string)null);
+                    b.ToTable("Tickets");
                 });
 
             modelBuilder.Entity("XraySocialClub.Data.TicketRecord", b =>
@@ -411,7 +414,7 @@ namespace XraySocialClub.Migrations
 
                     b.HasIndex("TicketId");
 
-                    b.ToTable("TicketRecords", (string)null);
+                    b.ToTable("TicketRecords");
                 });
 
             modelBuilder.Entity("XraySocialClub.Data.Member", b =>

@@ -7,40 +7,60 @@
     <h1 class="display-5 fw-bold">@ViewData["Title"]</h1>
 </div>
 
-<form asp-action="Edit" method="post" class="card p-4 shadow-lg">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-    <div class="form-floating mb-3">
-        <input asp-for="FirstName" class="form-control" id="floatingInput">
-        <label asp-for="FirstName">First Name</label>
-        <span asp-validation-for="FirstName" class="text-danger"></span>
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Success"]
     </div>
+}
 
-    <div class="form-floating mb-3">
-        <input asp-for="LastName" class="form-control" id="floatingInput">
-        <label asp-for="LastName">Last Name</label>
-        <span asp-validation-for="LastName" class="text-danger"></span>
-    </div>
 
-    <div class="form-floating mb-3">
-        <input asp-for="Email" type="email" class="form-control" id="floatingInput">
-        <label asp-for="Email">Email Address</label>
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
+<div class="card p-4 shadow-lg">
+    <form asp-action="Edit" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-    <div class="form-floating mb-3">
-        <select class="form-select" id="floatingSelect" aria-label="Role Select" asp-for="Role"
+        <div class="form-floating mb-3">
+            <input asp-for="Id" disabled class="form-control" id="floatingInput">
+            <label asp-for="Id">Id</label>
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="FirstName" class="form-control" id="floatingInput">
+            <label asp-for="FirstName">First Name</label>
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="LastName" class="form-control" id="floatingInput">
+            <label asp-for="LastName">Last Name</label>
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="Email" type="email" class="form-control" id="floatingInput">
+            <label asp-for="Email">Email Address</label>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <select class="form-select" id="floatingSelect" aria-label="Role Select" asp-for="Role"
             asp-items="Html.GetEnumSelectList<Role>()">
-        </select>
+            <option selected>Select a role</option>
+            </select>
         <label for="floatingSelect">Role</label>
-    </div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100 mb-3">Update Member Details</button>
+    </form>
 
-    <div class="mb-3">
+    <form asp-action="Edit" method="post">
         @foreach(var role in Model.Roles)
         {
-            <button type="button" class="btn btn-secondary btn-sm">Remove @role</button>
+            <input type="hidden" asp-for="RemoveRole" value="true" />
+            <input type="hidden" asp-for="RoleName" value="@role"/>
+            <div>
+                <button type="submit" class="btn btn-outline-secondary w-100 mb-3">Remove @role Role</button>
+            </div>
         }
-    </div>
-
-    <a class="btn btn-primary" href="#" role="button">Update</a>
-</form>
+    </form>
+</div>
