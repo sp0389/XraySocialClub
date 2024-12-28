@@ -1,7 +1,7 @@
 ﻿using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using XraySocialClub.Areas.Administration.Models;
+using XraySocialClub.Areas.Administration.Models.Member;
 using XraySocialClub.Data;
 using XraySocialClub.Data.Core;
 

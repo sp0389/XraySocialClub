@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using XraySocialClub.Data;
 
-namespace XraySocialClub.Areas.Administration.Models;
+namespace XraySocialClub.Areas.Administration.Models.Member;
 
 public class RegisterViewModel
 {

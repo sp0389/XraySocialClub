@@ -1,4 +1,4 @@
-namespace XraySocialClub.Areas.Administration.Models;
+namespace XraySocialClub.Areas.Administration.Models.Member;
 
 public class MemberViewModel
 {

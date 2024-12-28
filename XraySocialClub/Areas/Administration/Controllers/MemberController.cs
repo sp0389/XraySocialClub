@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using XraySocialClub.Areas.Administration.Models;
+using XraySocialClub.Areas.Administration.Models.Member;
 using XraySocialClub.Data;
 using XraySocialClub.Data.Core;
 using XraySocialClub.Services;
