@@ -7,10 +7,12 @@ namespace XraySocialClub.Services
     public class PaymentService
     {
         private readonly ApplicationDbContext _context;
+        private readonly OrganisationService _organisationService;
 
-        public PaymentService(ApplicationDbContext context)
+        public PaymentService(ApplicationDbContext context, OrganisationService organisationService)
         {
             _context = context;
+            _organisationService = organisationService;
         }
 
         public async Task<IEnumerable<Payment>> GetAllPaymentsAsync()
@@ -28,12 +30,37 @@ namespace XraySocialClub.Services
             //TODO: Error handling
         }
 
-        public async Task <IEnumerable<LottoPayment>> GetLottoPaymentsAsync()
+        public async Task<IEnumerable<LottoPayment>> GetLottoPaymentsAsync()
         {
             var lottoPayments = await _context.Payments.OfType<LottoPayment>()
                 .ToListAsync();
             return lottoPayments;
             //TODO: Error handling
+        }
+
+        public async Task<IEnumerable<Payment>> GetPaymentRecordForMemberAsync(string id)
+        {
+            var member = await _organisationService.GetMemberByIdAsync(id);
+
+            if (member.Role == Role.Lotto)
+            {
+                var paymentRecord = await _context.Payments.OfType<LottoPayment>()
+                    .ToListAsync() ?? throw new ApplicationException("No payment records were found for this user.");
+                return paymentRecord;
+            }
+            else if (member.Role == Role.Lotto && member.Role == Role.Social)
+            {
+                var paymentRecord = await _context.Payments.OfType<SocialPayment>()
+                    .OfType<LottoPayment>()
+                    .ToListAsync() ?? throw new ApplicationException("No payment records were found for this user.");
+                return paymentRecord;
+            }
+            else
+            {
+                var paymentRecord = await _context.Payments.OfType<SocialPayment>()
+                    .ToListAsync() ?? throw new ApplicationException("No payment records were found for this user.");
+                return paymentRecord;
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using XraySocialClub.Areas.Administration.Models.Payment;
 using XraySocialClub.Data.Core;
 using XraySocialClub.Services;
 
@@ -13,24 +14,30 @@ namespace XraySocialClub.Areas.Administration.Controllers
             _paymentService = paymentService;
         }
 
-        // TODO: have two views for different types of payments for users (i.e. all/lotto/social)
-        public async Task<IActionResult> Index(bool? isLotto)
+        public async Task<IActionResult> Index(string id)
         {
-            switch (isLotto)
+            try
             {
-                case true:
-                    return View(await _paymentService.GetLottoPaymentsAsync());
-                case false:
-                    return View(await _paymentService.GetSocialPaymentsAsync());
-                default:
-                    return View(await _paymentService.GetAllPaymentsAsync());
+                var paymentRecord = await _paymentService.GetPaymentRecordForMemberAsync(id);
+                return View(paymentRecord);
             }
+            catch (ApplicationException ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+            return View();
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(string id)
         {
-            return View();
+            var m = new PaymentViewModel()
+            {
+                Id = id,
+                DatePaid = DateTime.UtcNow,
+            };
+
+            return View(m);
         }
     }
 }

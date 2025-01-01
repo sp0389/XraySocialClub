@@ -1,5 +1,32 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model PaymentViewModel
+
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold">Create New Payment Record</h1>
+</div>
+
+<form asp-action="Create" method="post" class="card p-4 shadow-lg">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="Id" class="form-control" disabled>
+        <label asp-for="Id">Member ID</label>
+        <span asp-validation-for="Amount" class="text-danger"></span>
+    </div>
+
+    <div class="form-floating mb-3">
+        <input asp-for="DatePaid" class="form-control"  disabled>
+        <label asp-for="DatePaid">Date Paid</label>
+        <span asp-validation-for="DatePaid" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <select class="form-select" asp-for="Type" asp-items="Html.GetEnumSelectList<PaymentType>()"></select>
+    </div>
+
+    <div class="form-floating mb-3">
+        <textarea class="form-control" style="height: 150px"></textarea>
+        <label asp-for="Notes">Notes</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
