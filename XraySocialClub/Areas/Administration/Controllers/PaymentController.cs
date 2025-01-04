@@ -21,6 +21,7 @@ namespace XraySocialClub.Areas.Administration.Controllers
                 var paymentRecord = await _paymentService.GetPaymentRecordForMemberAsync(id);
                 return View(paymentRecord);
             }
+
             catch (ApplicationException ex)
             {
                 TempData["Error"] = ex.Message;
@@ -33,11 +34,32 @@ namespace XraySocialClub.Areas.Administration.Controllers
         {
             var m = new PaymentViewModel()
             {
-                Id = id,
+                MemberId = id,
                 DatePaid = DateTime.UtcNow,
             };
 
             return View(m);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(string id, PaymentViewModel m)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var paymentRecord = await _paymentService.CreatePaymentRecordForMemberAsync(id, m);
+                    TempData["Success"] = "Payment Record created for member.";
+                }
+
+                catch (Exception ex)
+                {
+                    TempData["Error"] = ex.Message;
+                    return View(m);
+                }
+            }
+
+            return RedirectToAction("Index", new {id});
         }
     }
 }

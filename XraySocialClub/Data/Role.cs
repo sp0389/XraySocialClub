@@ -7,4 +7,10 @@
         Lotto,
         Administrator
     }
+
+    public enum RolePaymentType
+    {
+        Social,
+        Lotto,
+    }
 }
