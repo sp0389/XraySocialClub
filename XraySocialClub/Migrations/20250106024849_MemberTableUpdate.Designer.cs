@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using XraySocialClub.Data.Core;
 
@@ -11,9 +12,11 @@ using XraySocialClub.Data.Core;
 namespace XraySocialClub.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250106024849_MemberTableUpdate")]
+    partial class MemberTableUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -292,6 +295,9 @@ namespace XraySocialClub.Migrations
                     b.Property<DateTime>("Registered")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -442,6 +448,7 @@ namespace XraySocialClub.Migrations
                             PasswordHash = "AQAAAAIAAYagAAAAEHsSevUsbVfCvzTrAPeOAJGAdLJXoClxNuG4OJyPozgYXexeGOqLXgnIxAZgTQTbfA==",
                             PhoneNumberConfirmed = false,
                             Registered = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Role = 0,
                             SecurityStamp = "M67EBX32EPBJDLSU75U3EA5SFKIR7MDP",
                             TwoFactorEnabled = false,
                             UserName = "a.admin@xraysocials.com.au",
@@ -462,6 +469,7 @@ namespace XraySocialClub.Migrations
                             PasswordHash = "AQAAAAIAAYagAAAAEGuoaNhuyNZDd/SdkB7dMyKO61l9hBzj4h26Bm6gmQpnrpwe+vNFNyBLSPj0JGM13Q==",
                             PhoneNumberConfirmed = false,
                             Registered = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Role = 2,
                             SecurityStamp = "ISWZYSPA6TIRY35DE4KKKESEPQZKL6VG",
                             TwoFactorEnabled = false,
                             UserName = "l.larry@xraysocials.com.au",
@@ -482,6 +490,7 @@ namespace XraySocialClub.Migrations
                             PasswordHash = "AQAAAAIAAYagAAAAENaAF8X3fgawsa7CT8EKV1Bm+PGcrq9PhRBL+ee6Rb8lCZVRf/6it+zEesnSHS6q1w==",
                             PhoneNumberConfirmed = false,
                             Registered = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Role = 1,
                             SecurityStamp = "LZOWMFVS2SAJIT7PFI3CPG4WQDCHQS5R",
                             TwoFactorEnabled = false,
                             UserName = "s.social@xraysocials.com.au",

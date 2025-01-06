@@ -25,7 +25,7 @@ namespace XraySocialClub.Data.Core
                 .HasForeignKey(sp => sp.MemberId)
                 .OnDelete(DeleteBehavior.Restrict);
                 sp.Property(sp => sp.MemberId)
-                .HasColumnName("SP_MemberId");
+                .HasColumnName("MemberId");
             });
 
             mb.Entity<LottoPayment>(lp =>
@@ -35,7 +35,7 @@ namespace XraySocialClub.Data.Core
                 .HasForeignKey(lp => lp.MemberId)
                 .OnDelete(DeleteBehavior.Restrict);
                 lp.Property(sp => sp.MemberId)
-                .HasColumnName("LP_MemberId");
+                .HasColumnName("MemberId");
             });
 
             mb.Entity<Member>(m =>

@@ -45,7 +45,7 @@ namespace XraySocialClub.Services
         public async Task<IEnumerable<MemberViewModel>> GetSocialMembersAsync()
         {
             var socialMembers = await _context.Users.OfType<Member>()
-                .Where(sm => sm.Role == Role.Social)
+                .Where(sm => sm.UserRoles.Contains(Role.Social))
                 .ProjectToType<MemberViewModel>()
                 .ToListAsync();
             return socialMembers;
@@ -54,7 +54,7 @@ namespace XraySocialClub.Services
         public async Task<IEnumerable<MemberViewModel>> GetLottoMembersAsync()
         {
             var lottoMembers = await _context.Users.OfType<Member>()
-                .Where(lm => lm.Role == Role.Lotto)
+                .Where(lm => lm.UserRoles.Contains(Role.Lotto))
                 .ProjectToType<MemberViewModel>()
                 .ToListAsync();
             return lottoMembers;
@@ -83,6 +83,7 @@ namespace XraySocialClub.Services
 
         public async Task AddMemberToRoleAsync(Member member, Role role)
         {
+            member.UserRoles.Add(role);
             var result = await _userManager.AddToRoleAsync(member, role.ToString());
 
             if (!result.Succeeded)

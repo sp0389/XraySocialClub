@@ -71,7 +71,6 @@ namespace XraySocialClub.Areas.Administration.Controllers
                     FirstName = member.FirstName,
                     LastName = member.LastName,
                     Email = member.Email ?? "Not available",
-                    Role = member.Role,
                     Roles = await _organisationService.GetUserRolesAsync(member)
                 };
 
@@ -97,6 +96,15 @@ namespace XraySocialClub.Areas.Administration.Controllers
                 
                 if (m.RoleName != null && m.RemoveRole == true)
                 {
+                    if (m.RoleName == "Social")
+                    {
+                        member.UserRoles.Remove(Role.Social);
+                    }
+
+                    else
+                    {
+                        member.UserRoles.Remove(Role.Lotto);
+                    }
                     await _organisationService.RemoveMemberFromRoleAsync(member, m.RoleName);
                 }
             }
@@ -111,12 +119,11 @@ namespace XraySocialClub.Areas.Administration.Controllers
                 member.FirstName = m.FirstName!;
                 member.LastName = m.LastName!;
                 member.Email = m.Email;
-                member.Role = m.Role!.Value;
                 
                 try
                 {
                     await _organisationService.UpdateMemberDetailsAsync(member);
-                    await _organisationService.AddMemberToRoleAsync(member, member.Role);  
+                    await _organisationService.AddMemberToRoleAsync(member, m.Role!.Value);  
                 }
 
                 catch (ApplicationException ex)

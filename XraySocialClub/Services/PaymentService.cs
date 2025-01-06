@@ -20,7 +20,6 @@ namespace XraySocialClub.Services
         {
             var payments = await _context.Payments.ToListAsync();
             return payments;
-            //TODO: Error handling
         }
 
         public async Task<IEnumerable<SocialPayment>> GetSocialPaymentsAsync()
@@ -28,7 +27,6 @@ namespace XraySocialClub.Services
             var socialPayments = await _context.Payments.OfType<SocialPayment>()
                 .ToListAsync();
             return socialPayments;
-            //TODO: Error handling
         }
 
         public async Task<IEnumerable<LottoPayment>> GetLottoPaymentsAsync()
@@ -36,32 +34,33 @@ namespace XraySocialClub.Services
             var lottoPayments = await _context.Payments.OfType<LottoPayment>()
                 .ToListAsync();
             return lottoPayments;
-            //TODO: Error handling
         }
 
         public async Task<IEnumerable<Payment>> GetPaymentRecordForMemberAsync(string id)
         {
             var member = await _organisationService.GetMemberByIdAsync(id);
+            var memberRoles = await _organisationService.GetUserRolesAsync(member);
 
-            if (member.Role == Role.Lotto)
+            if (memberRoles.Contains("Social") && memberRoles.Contains("Lotto"))
             {
-                var paymentRecord = await _context.Payments.OfType<LottoPayment>()
-                    .ToListAsync() ?? throw new ApplicationException("No payment records were found for this user.");
+                var paymentRecord = await _context.Payments
+                    .Where(m => m.MemberId == member.Id && (m is LottoPayment || m is SocialPayment)).ToListAsync();
                 return paymentRecord;
             }
 
-            else if (member.Role == Role.Lotto && member.Role == Role.Social)
+            else if (memberRoles.Contains("Lotto"))
             {
-                var paymentRecord = await _context.Payments.OfType<SocialPayment>()
-                    .OfType<LottoPayment>()
-                    .ToListAsync() ?? throw new ApplicationException("No payment records were found for this user.");
+                var paymentRecord = await _context.Payments.OfType<LottoPayment>()
+                    .Where(m => m.MemberId == member.Id)
+                    .ToListAsync();
                 return paymentRecord;
             }
 
             else
             {
                 var paymentRecord = await _context.Payments.OfType<SocialPayment>()
-                    .ToListAsync() ?? throw new ApplicationException("No payment records were found for this user.");
+                    .Where(m => m.MemberId == member.Id)
+                    .ToListAsync();
                 return paymentRecord;
             }
         }
@@ -71,7 +70,7 @@ namespace XraySocialClub.Services
             var member = await _organisationService.GetMemberByIdAsync(id)
                 ?? throw new ApplicationException("No user was found with that ID.");
 
-            if (m.RolePaymentType == RolePaymentType.Lotto)
+            if (m.RolePaymentType == RolePaymentType.Lotto && member.UserRoles.Contains(Role.Lotto))
             {
                 var lottoPayment = member.NewLottoPayment(m.Amount!.Value, m.DatePaid!.Value, m.Type!.Value, m.Notes!);
                 await _context.Payments.AddAsync(lottoPayment);
@@ -79,12 +78,17 @@ namespace XraySocialClub.Services
                 return lottoPayment;
             }
 
-            else
+            else if (m.RolePaymentType == RolePaymentType.Social && member.UserRoles.Contains(Role.Social))
             {
                 var socialPayment = member.NewSocialPayment(m.Amount!.Value, m.DatePaid!.Value, m.Type!.Value, m.Notes!);
                 await _context.Payments.AddAsync(socialPayment);
                 await _context.SaveChangesAsync();
                 return socialPayment;
+            }
+
+            else
+            {
+                throw new ApplicationException("This member does not have that role payment type. Please add the member to the role.");
             }
         }
     }

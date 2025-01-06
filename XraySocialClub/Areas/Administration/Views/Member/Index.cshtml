@@ -5,35 +5,39 @@
 }
 
 <div class="px-4 py-5 my-5 text-center">
-    <h1 class="display-5 fw-bold">@ViewData["Title"]</h1>
+  <h1 class="display-5 fw-bold">@ViewData["Title"]</h1>
 </div>
 
 <a class="btn btn-primary mb-3" href="/Administration/Member/Register" role="button">Register Member</a>
-
-<table class="table table-striped table-bordered">
-  <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">First Name</th>
-      <th scope="col">Last Name</th>
-      <th scope="col">Email Address</th>
-      <th scope="col">Administration</th>
-    </tr>
-  </thead>
-  <tbody>
-    @foreach (var m in Model)
-    {
-      <tr>
-        <th scope="row">@m.Id</th>
-        <td>@m.FirstName</td>
-        <td>@m.LastName</td>
-        <td>@m.Email</td>
-        <td><a href="@Url.Action("Edit", "Member", new { id = m.Id })" class="link-underline-primary">Update</a> | <a href="@Url.Action("Payment", "Member", new { id = m.Id })"class="link-underline-primary" role="button">Payment</a></td>
-      </tr>
-    }
-  </tbody>
-</table>
-
+<div class="card p-4 shadow-lg mb-3">
+  <div class="class-body">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Email Address</th>
+          <th scope="col">Administration</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach (var m in Model)
+        {
+          <tr>
+            <th scope="row">@m.Id</th>
+            <td>@m.FirstName</td>
+            <td>@m.LastName</td>
+            <td>@m.Email</td>
+            <td><a href="@Url.Action("Edit", "Member", new { id = m.Id })" class="link-underline-primary">Update</a> | <a
+                href="@Url.Action("Index", "Payment", new { id = m.Id })" class="link-underline-primary"
+                role="button">Payment</a></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
 <a class="btn btn-primary float-end" href="/Administration/Member?isLotto=false">Social Members</a>
 <a class="btn btn-primary float-end me-1" href="/Administration/Member?isLotto=true">Lotto Members</a>
 <a class="btn btn-primary float-end mb-3 me-1" href="/Administration/Member">All Members</a>

@@ -49,7 +49,7 @@ namespace XraySocialClub.Areas.Administration.Controllers
                 try
                 {
                     var paymentRecord = await _paymentService.CreatePaymentRecordForMemberAsync(id, m);
-                    TempData["Success"] = "Payment Record created for member.";
+
                 }
 
                 catch (Exception ex)
@@ -58,7 +58,8 @@ namespace XraySocialClub.Areas.Administration.Controllers
                     return View(m);
                 }
             }
-
+            
+            TempData["Success"] = "Payment Record created for member.";
             return RedirectToAction("Index", new {id});
         }
     }

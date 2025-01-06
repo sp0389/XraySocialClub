@@ -9,7 +9,8 @@ namespace XraySocialClub.Data
         public DateTime Registered { get; set; }
         public int OrganisationId { get; set; }
         public Organisation Organisation { get; set; } = default!;
-        public Role Role { get; set; }
+        // public Role Role { get; set; }
+        public ICollection<Role> UserRoles { get; set; } = new List<Role>();
         protected OrganisationUser() { }
         public OrganisationUser(int organisationId, string username, string firstName, string lastName, string email, Role? role)
         {
@@ -18,7 +19,7 @@ namespace XraySocialClub.Data
             FirstName = firstName;
             LastName = lastName;
             Email = email;
-            Role = role ?? Role.Pending;
+            UserRoles = [Role.Pending];
         }
     }
 
