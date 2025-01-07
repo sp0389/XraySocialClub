@@ -20,6 +20,12 @@
   </div>
 
   <div class="form-floating mb-3">
+    <input asp-for="Price" class="form-control">
+    <label asp-for="Price">Price</label>
+    <span asp-validation-for="Price" class="text-danger"></span>
+  </div>
+
+  <div class="form-floating mb-3">
     <textarea asp-for="Notes" class="form-control" style="height: 150px"></textarea>
     <label asp-for="Notes">Notes</label>
   </div>

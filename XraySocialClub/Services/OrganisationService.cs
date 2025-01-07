@@ -34,28 +34,25 @@ namespace XraySocialClub.Services
             return member;
         }
 
-        public async Task<IEnumerable<MemberViewModel>> GetAllMembersAsync()
+        public async Task<IEnumerable<Member>> GetAllMembersAsync()
         {
             var members = await _context.Users.OfType<Member>()
-                .ProjectToType<MemberViewModel>()
                 .ToListAsync();
             return members;
         }
 
-        public async Task<IEnumerable<MemberViewModel>> GetSocialMembersAsync()
+        public async Task<IEnumerable<Member>> GetSocialMembersAsync()
         {
             var socialMembers = await _context.Users.OfType<Member>()
                 .Where(sm => sm.UserRoles.Contains(Role.Social))
-                .ProjectToType<MemberViewModel>()
                 .ToListAsync();
             return socialMembers;
         }
 
-        public async Task<IEnumerable<MemberViewModel>> GetLottoMembersAsync()
+        public async Task<IEnumerable<Member>> GetLottoMembersAsync()
         {
             var lottoMembers = await _context.Users.OfType<Member>()
                 .Where(lm => lm.UserRoles.Contains(Role.Lotto))
-                .ProjectToType<MemberViewModel>()
                 .ToListAsync();
             return lottoMembers;
         }

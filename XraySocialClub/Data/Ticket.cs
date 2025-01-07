@@ -16,10 +16,11 @@
         public TicketType Type { get; set; }
         public ICollection<TicketRecord> TicketRecords { get; set; } = new List<TicketRecord>();
         private Ticket() { }
-        public Ticket(string drawNumber, DateTime drawDate, string notes, TicketType ticketType)
+        public Ticket(string drawNumber, DateTime drawDate, decimal price, string notes, TicketType ticketType)
         {
             DrawNumber = drawNumber;
             DrawDate = drawDate;
+            Price = price;
             Notes = notes;
             Type = ticketType;
         }
