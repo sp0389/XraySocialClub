@@ -1,0 +1,35 @@
+﻿@model TicketViewModel
+
+<div class="px-4 py-5 my-5 text-center">
+  <h1 class="display-5 fw-bold">Create Ticket Record</h1>
+</div>
+
+<form asp-action="Create" method="post" class="card p-4 shadow-lg">
+  <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+  <div class="form-floating mb-3">
+    <input asp-for="DrawNumber" class="form-control">
+    <label asp-for="DrawNumber">Draw Number</label>
+    <span asp-validation-for="DrawNumber" class="text-danger"></span>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input asp-for="DrawDate" class="form-control">
+    <label asp-for="DrawDate">Draw Date</label>
+    <span asp-validation-for="DrawDate" class="text-danger"></span>
+  </div>
+
+  <div class="form-floating mb-3">
+    <textarea asp-for="Notes" class="form-control" style="height: 150px"></textarea>
+    <label asp-for="Notes">Notes</label>
+  </div>
+
+  <div class="form-floating mb-3">
+    <select class="form-select" id="floatingSelect" aria-label="Ticket Type" asp-for="Type"
+      asp-items="Html.GetEnumSelectList<TicketType>()">
+    </select>
+    <label for="floatingSelect">Ticket Type</label>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

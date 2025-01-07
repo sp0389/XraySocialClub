@@ -35,8 +35,6 @@
         private TicketRecord() { }
         public TicketRecord(Member member, Ticket ticket)
         {
-            Member = member;
-            Ticket =  ticket;
             MemberId = member.Id;
             TicketId = ticket.Id;
         }
