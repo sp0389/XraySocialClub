@@ -75,5 +75,24 @@ namespace XraySocialClub.Areas.Administration.Controllers
 
             return View(m);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateRecord(TicketRecordViewModel m)
+        {
+            if(ModelState.IsValid)
+            {
+                try
+                {
+                    await _ticketService.CreateTicketRecordForMemberAsync(m);
+                }
+
+                catch (ApplicationException ex)
+                {
+                    TempData["Error"] = ex.Message;
+                    return View(m);
+                }
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

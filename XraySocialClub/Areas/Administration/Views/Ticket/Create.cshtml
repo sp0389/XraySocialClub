@@ -1,8 +1,15 @@
 ﻿@model TicketViewModel
 
 <div class="px-4 py-5 my-5 text-center">
-  <h1 class="display-5 fw-bold">Create Ticket Record</h1>
+  <h1 class="display-5 fw-bold">Purchased Tickets</h1>
 </div>
+
+@if(TempData["Error"] != null)
+{
+  <div class="alert alert-danger" role="alert">
+    @TempData["Error"]
+  </div>
+}
 
 <form asp-action="Create" method="post" class="card p-4 shadow-lg">
   <div asp-validation-summary="ModelOnly" class="text-danger"></div>

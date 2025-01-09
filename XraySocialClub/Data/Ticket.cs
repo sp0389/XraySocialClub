@@ -34,10 +34,10 @@
         public string MemberId { get; set; } = default!;
         public Member Member { get; set; } = default!;
         private TicketRecord() { }
-        public TicketRecord(Member member, Ticket ticket)
+        public TicketRecord(Ticket ticket, Member member)
         {
-            MemberId = member.Id;
             TicketId = ticket.Id;
+            MemberId = member.Id;
         }
     }
 }
