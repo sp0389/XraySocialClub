@@ -96,15 +96,22 @@ namespace XraySocialClub.Areas.Administration.Controllers
                 
                 if (m.RoleName != null && m.RemoveRole == true)
                 {
-                    if (m.RoleName == "Social")
+                    switch(m.RoleName)
                     {
-                        member.UserRoles.Remove(Role.Social);
+                        case "Social":
+                            member.UserRoles.Remove(Role.Social);
+                            break;
+                        case "Lotto":
+                            member.UserRoles.Remove(Role.Lotto);
+                            break;
+                        case "Pending":
+                            member.UserRoles.Remove(Role.Pending);
+                            break;
+                        case "Administrator":
+                            member.UserRoles.Remove(Role.Administrator);
+                            break;
                     }
-
-                    else
-                    {
-                        member.UserRoles.Remove(Role.Lotto);
-                    }
+                    
                     await _organisationService.RemoveMemberFromRoleAsync(member, m.RoleName);
                 }
             }

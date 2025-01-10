@@ -11,12 +11,12 @@
 <form asp-action="CreateRecord" method="post" asp-route-id="@ticketId" class="card p-4 shadow-lg">
   <input type="hidden" name="TicketId" value="@ticketId" />
   <ul class="list-group">
-    @foreach(var member in Model.Members)
+    @foreach (var member in Model.Members)
     {
-      <li class="list-group-item">
-        <input class="form-check-input me-1" type="checkbox" name="SelectedMemberId" value="@member.Id" aria-label="Member checkbox select">
+        <li class="list-group-item">
+          <input class="form-check-input me-1" type="checkbox" name="SelectedMemberId" value="@member.Id" aria-label="Member checkbox select">
         @member.FirstName @member.LastName
-      </li>
+        </li>
     }
   </ul>
   <button type="submit" class="btn btn-primary mt-3">Add Members</button>
