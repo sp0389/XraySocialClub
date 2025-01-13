@@ -32,7 +32,11 @@
             <td>@m.Email</td>
             <td><a href="@Url.Action("Edit", "Member", new { id = m.Id })" class="link-underline-primary">Update</a> | <a
                 href="@Url.Action("Index", "Payment", new { id = m.Id })" class="link-underline-primary"
-                role="button">Payment</a></td>
+                role="button">Payment</a> |
+                @if(m.UserRoles.Contains(Role.Lotto))
+                {
+                  <a href="@Url.Action("TicketRecord", "Ticket", new { id = m.Id })" class="link-underline-primary">Records</a>
+                } </td>
           </tr>
         }
       </tbody>

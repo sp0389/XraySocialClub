@@ -92,7 +92,25 @@ namespace XraySocialClub.Areas.Administration.Controllers
                     return View(m);
                 }
             }
+            TempData["Success"] = "Ticket record created successfully for member(s).";
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> TicketRecord(string id)
+        {
+            try
+            {
+                var ticketRecords = await _ticketService.GetTicketRecordsForMemberAsync(id);
+                return View(ticketRecords);
+            }
+            
+            catch(ApplicationException ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+            
+            return View();
         }
     }
 }

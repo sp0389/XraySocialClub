@@ -44,7 +44,7 @@ namespace XraySocialClub.Services
                 .Include(tr => tr.Ticket)
                 .Where(tr => tr.MemberId == memberId)
                 .Select(t => t.Ticket)
-                .ToListAsync();
+                .ToListAsync() ?? throw new ApplicationException("No tickets were found for this member.");
                 
             return tickets;
         }
@@ -56,11 +56,11 @@ namespace XraySocialClub.Services
             foreach(var memberId in m.SelectedMemberId)
             {
                 var member = await _organisationService.GetMemberByIdAsync(memberId);
-
+                
                 var ticketRecord = new TicketRecord(ticket, member);
                 await _context.TicketRecords.AddAsync(ticketRecord);
             }
-            
+
             await _context.SaveChangesAsync();
         }
     }
