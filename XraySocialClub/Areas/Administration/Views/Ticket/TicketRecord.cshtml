@@ -1,5 +1,15 @@
 ﻿@model IEnumerable<Ticket>
 
+<div class="container my-5">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb p-3 bg-body-tertiary rounded-3">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="@Url.ActionLink("Index","Member")">Members</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Ticket Records</li>
+    </ol>
+  </nav>
+</div>
+
 <div class="px-4 py-5 my-5 text-center">
   <h1 class="display-5 fw-bold">Ticket Records</h1>
 </div>
@@ -7,15 +17,15 @@
 @if (TempData["Error"] != null)
 {
   <div class="alert alert-danger" role="alert">
-    @TempData["Error"]
-  </div>
+  @TempData["Error"]
+</div>
 }
 
 @if (TempData["Success"] != null)
 {
   <div class="alert alert-danger" role="alert">
-    @TempData["Success"]
-  </div>
+  @TempData["Success"]
+</div>
 }
 
 <div class="card p-4 shadow-lg">
