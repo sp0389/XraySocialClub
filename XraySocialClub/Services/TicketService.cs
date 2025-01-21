@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using XraySocialClub.Areas.Administration.Models.Ticket;
 using XraySocialClub.Data;
 using XraySocialClub.Data.Core;
@@ -55,13 +56,25 @@ namespace XraySocialClub.Services
   
             foreach(var memberId in m.SelectedMemberId)
             {
-                var member = await _organisationService.GetMemberByIdAsync(memberId);
-                
-                var ticketRecord = new TicketRecord(ticket, member);
-                await _context.TicketRecords.AddAsync(ticketRecord);
-            }
+                var checkRecordExists = await CheckIfTicketRecordExistsAsync(m.TicketId, memberId);
 
-            await _context.SaveChangesAsync();
+                if (!checkRecordExists)
+                {
+                    var member = await _organisationService.GetMemberByIdAsync(memberId);  
+                    var ticketRecord = new TicketRecord(ticket, member);
+                    await _context.TicketRecords.AddAsync(ticketRecord);
+                    await _context.SaveChangesAsync();
+                }
+            }
+        }
+
+        private async Task<bool> CheckIfTicketRecordExistsAsync(int ticketId, string memberId)
+        {
+            var ticketRecord = await _context.TicketRecords
+                .Where(tr => tr.TicketId == ticketId && tr.MemberId == memberId)
+                .AnyAsync();
+                
+            return ticketRecord;
         }
     }
 }
