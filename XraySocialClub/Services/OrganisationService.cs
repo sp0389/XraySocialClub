@@ -22,7 +22,8 @@ namespace XraySocialClub.Services
 
             var member = organisation.RegisterMember(organisation.Id, firstName, lastName, email, role);
             var result = await _userManager.CreateAsync(member, password);
-
+            
+            member.UserRoles.Add(role!.Value);
             await _userManager.AddToRoleAsync(member, role!.Value.ToString());
 
             if (!result.Succeeded)

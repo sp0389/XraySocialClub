@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using XraySocialClub.Areas.Administration.Models.Ticket;
 using XraySocialClub.Data;
 using XraySocialClub.Data.Core;
@@ -75,6 +74,15 @@ namespace XraySocialClub.Services
                 .AnyAsync();
                 
             return ticketRecord;
+        }
+
+        public async Task<decimal> TotalAmountSpentOnTicketsAsync()
+        {
+            var ticketPrice = await _context.Tickets.Select(t => t.Price)
+                .ToListAsync();
+            var sum = ticketPrice.Sum();
+
+            return sum;
         }
     }
 }

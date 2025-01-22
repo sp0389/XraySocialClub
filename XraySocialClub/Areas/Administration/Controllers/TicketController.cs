@@ -21,6 +21,7 @@ namespace XraySocialClub.Areas.Administration.Controllers
         {
             try
             {
+                ViewBag.Total = await _ticketService.TotalAmountSpentOnTicketsAsync();
                 var tickets = await _ticketService.GetAllTicketsAsync();
                 return View(tickets);
             }
