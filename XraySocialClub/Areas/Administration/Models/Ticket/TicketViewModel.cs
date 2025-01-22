@@ -16,6 +16,5 @@ namespace XraySocialClub.Areas.Administration.Models.Ticket
         public decimal? Price { get; set; }
         [Required(ErrorMessage = "A ticket type is required")]
         public TicketType Type { get; set; }
-        public decimal? TotalAmount { get; set; }
     }
 }

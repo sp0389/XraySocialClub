@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace XraySocialClub.Areas.Administration.Models.Purchase
 {
@@ -10,8 +11,10 @@ namespace XraySocialClub.Areas.Administration.Models.Purchase
         [Required(ErrorMessage = "The total price of the purchase is required.")]
         [Range(0.01, 10000, ErrorMessage = "The total price must be between 0.01 and 10000.")]
         public decimal? TotalPrice { get; set; }
+        [Required(ErrorMessage ="A receipt number is required.")]
         public string? ReceiptNumber { get; set; }
         [Required(ErrorMessage = "The date of the purchase is required.")]
+        [DisplayName("Date Purchased")]
         public DateTime? DatePurchased { get; set; }
     }
 }

@@ -1,0 +1,35 @@
+﻿@model PurchaseViewModel
+
+<form method="post" asp-controller="Purchase" asp-action="Create" >
+    <div class="px-4 py-5 my-5 text-center">
+        <h1 class="display-5 fw-bold">Purchase Record</h1>
+    </div>
+    
+    <div class="card shadow-lg p-4">
+        <div class="form-floating mb-3">
+            <input asp-for="Description" class="form-control">
+            <label asp-for="Description">Description</label>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="TotalPrice" class="form-control">
+            <label asp-for="Description">Price</label>
+            <span asp-validation-for="TotalPrice" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="ReceiptNumber" class="form-control">
+            <label asp-for="ReceiptNumber">Receipt Number</label>
+            <span asp-validation-for="ReceiptNumber" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="DatePurchased" class="form-control">
+            <label asp-for="DatePurchased"Date Purchased></label>
+            <span asp-validation-for="DatePurchased" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Record</button>
+    </div>
+</form>
