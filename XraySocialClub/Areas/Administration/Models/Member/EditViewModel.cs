@@ -1,9 +1,10 @@
-namespace XraySocialClub.Areas.Administration.Models.Member;
-
-public class EditViewModel : RegisterViewModel
+namespace XraySocialClub.Areas.Administration.Models.Member
 {
-    public string Id { get; set; } = default!;
-    public IEnumerable<string> Roles { get; set; } = new List<string>();
-    public string? RoleName { get; set; } = default!;
-    public bool? RemoveRole { get; set; }
+    public class EditViewModel : RegisterViewModel
+    {
+        public string? Id { get; set; }
+        public IEnumerable<string> Roles { get; set; } = new List<string>();
+        public string? RoleName { get; set; }
+        public bool? RemoveRole { get; set; }
+    }
 }

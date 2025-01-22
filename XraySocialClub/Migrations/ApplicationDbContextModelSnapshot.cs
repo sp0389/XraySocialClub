@@ -445,7 +445,7 @@ namespace XraySocialClub.Migrations
                             SecurityStamp = "M67EBX32EPBJDLSU75U3EA5SFKIR7MDP",
                             TwoFactorEnabled = false,
                             UserName = "a.admin@xraysocials.com.au",
-                            UserRoles = "[]"
+                            UserRoles = "[3]"
                         },
                         new
                         {

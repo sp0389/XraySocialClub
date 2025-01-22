@@ -9,6 +9,7 @@ namespace XraySocialClub.Data.Core
         public required DbSet<Payment> Payments { get; set; }
         public required DbSet<Ticket> Tickets { get; set; }
         public required DbSet<TicketRecord> TicketRecords { get; set; }
+        public required DbSet<Purchase> Purchases { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
