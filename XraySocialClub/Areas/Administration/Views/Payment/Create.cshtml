@@ -1,57 +1,57 @@
 ﻿@model PaymentViewModel
 
 <div class="px-4 py-5 my-5 text-center">
-  <h1 class="display-5 fw-bold">Create New Payment Record</h1>
+    <h1 class="display-5 fw-bold">Create New Payment Record</h1>
 </div>
 
 @{
-  if (TempData["Error"] != null)
-  {
-    <div class="alert alert-danger" role="alert">
-      @TempData["Error"]
-    </div>
-  }
+    if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["Error"]
+        </div>
+    }
 }
 
 <form asp-action="Create" method="post" class="card p-4 shadow-lg">
-  <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-  <div class="form-floating mb-3">
-    <input asp-for="MemberId" class="form-control" readonly>
-    <label asp-for="MemberId">Member ID</label>
-    <span asp-validation-for="MemberId" class="text-danger"></span>
-  </div>
+    <div class="form-floating mb-3">
+        <input asp-for="MemberId" class="form-control" readonly>
+        <label asp-for="MemberId">Member ID</label>
+        <span asp-validation-for="MemberId" class="text-danger"></span>
+    </div>
 
-  <div class="form-floating mb-3">
-    <input asp-for="Amount" class="form-control">
-    <label asp-for="Amount">Amount</label>
-    <span asp-validation-for="Amount" class="text-danger"></span>
-  </div>
+    <div class="form-floating mb-3">
+        <input asp-for="Amount" class="form-control">
+        <label asp-for="Amount">Amount</label>
+        <span asp-validation-for="Amount" class="text-danger"></span>
+    </div>
 
-  <div class="form-floating mb-3">
-    <input asp-for="DatePaid" class="form-control">
-    <label asp-for="DatePaid">Date Paid</label>
-    <span asp-validation-for="DatePaid" class="text-danger"></span>
-  </div>
+    <div class="form-floating mb-3">
+        <input asp-for="DatePaid" class="form-control">
+        <label asp-for="DatePaid">Date Paid</label>
+        <span asp-validation-for="DatePaid" class="text-danger"></span>
+    </div>
 
-  <div class="form-floating mb-3">
-    <select class="form-select" id="floatingSelect" aria-label="Payment Type" asp-for="Type"
-      asp-items="Html.GetEnumSelectList<PaymentType>()">
-    </select>
-    <label for="floatingSelect">Payment Type</label>
-  </div>
+    <div class="form-floating mb-3">
+        <select class="form-select" id="floatingSelect" aria-label="Payment Type" asp-for="Type"
+                asp-items="Html.GetEnumSelectList<PaymentType>()">
+        </select>
+        <label for="floatingSelect">Payment Type</label>
+    </div>
 
-  <div class="form-floating mb-3">
-    <select class="form-select" id="floatingSelect" aria-label="Role Payment Type" asp-for="RolePaymentType"
-      asp-items="Html.GetEnumSelectList<RolePaymentType>()">
-    </select>
-    <label for="floatingSelect">Role Payment Type</label>
-  </div>
+    <div class="form-floating mb-3">
+        <select class="form-select" id="floatingSelect" aria-label="Role Payment Type" asp-for="RolePaymentType"
+                asp-items="Html.GetEnumSelectList<RolePaymentType>()">
+        </select>
+        <label for="floatingSelect">Role Payment Type</label>
+    </div>
 
-  <div class="form-floating mb-3">
-    <textarea asp-for="Notes" class="form-control" style="height: 150px"></textarea>
-    <label asp-for="Notes">Notes</label>
-  </div>
+    <div class="form-floating mb-3">
+        <textarea asp-for="Notes" class="form-control" style="height: 150px"></textarea>
+        <label asp-for="Notes">Notes</label>
+    </div>
 
-  <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>

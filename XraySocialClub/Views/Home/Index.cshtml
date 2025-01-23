@@ -17,10 +17,10 @@
     </div>
 </div>
 
-<div class="album py-5">
-    <div class="container">
-        @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("Administrator"))
-        {
+@if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("Administrator"))
+{
+    <div class="album py-5 border border-secondary-subtle shadow-lg rounded">
+        <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 <div class="col">
                     <div class="card shadow-sm">
@@ -64,6 +64,6 @@
                     </div>
                 </div>
             </div>
-        }
+        </div>
     </div>
-</div>
+}

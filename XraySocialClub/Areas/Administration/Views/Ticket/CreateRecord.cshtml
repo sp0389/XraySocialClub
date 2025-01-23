@@ -1,23 +1,23 @@
 ﻿@model TicketRecordViewModel
 
 @{
-  var ticketId = @Url.ActionContext.RouteData.Values["id"];
+    var ticketId = @Url.ActionContext.RouteData.Values["id"];
 }
 
 <div class="px-4 py-5 my-5 text-center">
-  <h1 class="display-5 fw-bold">Add Members To Ticket Record: @ticketId</h1>
+    <h1 class="display-5 fw-bold">Add Members To Ticket Record: @ticketId</h1>
 </div>
 
 <form asp-action="CreateRecord" method="post" asp-route-id="@ticketId" class="card p-4 shadow-lg">
-  <input type="hidden" name="TicketId" value="@ticketId" />
-  <ul class="list-group">
-    @foreach (var member in Model.Members)
-    {
-        <li class="list-group-item">
-          <input class="form-check-input me-1" type="checkbox" name="SelectedMemberId" value="@member.Id" aria-label="Member checkbox select">
-        @member.FirstName @member.LastName
-        </li>
-    }
-  </ul>
-  <button type="submit" class="btn btn-primary mt-3">Add Members</button>
+    <input type="hidden" name="TicketId" value="@ticketId" />
+    <ul class="list-group">
+        @foreach (var member in Model.Members)
+        {
+            <li class="list-group-item">
+                <input class="form-check-input me-1" type="checkbox" name="SelectedMemberId" value="@member.Id" aria-label="Member checkbox select">
+                @member.FirstName @member.LastName
+            </li>
+        }
+    </ul>
+    <button type="submit" class="btn btn-primary mt-3">Add Members</button>
 </form>
