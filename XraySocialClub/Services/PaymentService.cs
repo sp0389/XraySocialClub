@@ -36,6 +36,14 @@ namespace XraySocialClub.Services
             return lottoPayments;
         }
 
+        public async Task<decimal> GetSumOfMembersPaymentsAsync(string id)
+        {
+            var member = await _organisationService.GetMemberByIdAsync(id);
+            var sum = await _context.Payments.Where(m => m.MemberId == member.Id)
+                .SumAsync(m => m.Amount);
+            return sum;
+        }
+
         public async Task<IEnumerable<Payment>> GetPaymentRecordForMemberAsync(string id)
         {
             var member = await _organisationService.GetMemberByIdAsync(id);

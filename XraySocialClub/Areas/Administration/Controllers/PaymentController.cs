@@ -19,6 +19,7 @@ namespace XraySocialClub.Areas.Administration.Controllers
             try
             {
                 var paymentRecord = await _paymentService.GetPaymentRecordForMemberAsync(id);
+                ViewBag.PaymentTotal = await _paymentService.GetSumOfMembersPaymentsAsync(id);
                 return View(paymentRecord);
             }
 

@@ -78,10 +78,7 @@ namespace XraySocialClub.Services
 
         public async Task<decimal> TotalAmountSpentOnTicketsAsync()
         {
-            var ticketPrice = await _context.Tickets.Select(t => t.Price)
-                .ToListAsync();
-            var sum = ticketPrice.Sum();
-
+            var sum = await _context.Tickets.SumAsync(t => t.Price);
             return sum;
         }
     }

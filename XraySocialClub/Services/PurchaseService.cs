@@ -20,7 +20,6 @@ namespace XraySocialClub.Services
             return purchases;
         }
 
-        //TODO: Create a method to create a purchase record.
         public async Task<Purchase> CreatePurchaseRecordAsync(PurchaseViewModel m)
         {
             var purchaseRecord = new Purchase(m.Description!, m.TotalPrice!.Value, m.ReceiptNumber!, m.DatePurchased!.Value);
