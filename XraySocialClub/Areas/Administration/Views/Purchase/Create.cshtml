@@ -1,10 +1,26 @@
 ﻿@model PurchaseViewModel
 
-<form method="post" asp-controller="Purchase" asp-action="Create" >
-    <div class="px-4 py-5 my-5 text-center">
-        <h1 class="display-5 fw-bold">Purchase Record</h1>
+<div class="container my-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb p-3 bg-body-tertiary rounded-3">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Create Purchase Record</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold">Create Purchase Record</h1>
+</div>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Error"]
     </div>
-    
+}
+
+<form method="post" asp-controller="Purchase" asp-action="Create" >    
     <div class="card shadow-lg p-4">
         <div class="form-floating mb-3">
             <input asp-for="Description" class="form-control">

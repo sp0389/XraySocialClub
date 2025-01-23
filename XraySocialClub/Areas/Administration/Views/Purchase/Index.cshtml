@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Purchase>
+
+<div class="container my-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb p-3 bg-body-tertiary rounded-3">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Purchase History</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold">Purchase History</h1>
+</div>
+
+<div class="card shadow-lg p-4">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price</th>
+                <th scope="col">Receipt Number</th>
+                <th scope="col">Date Purchased</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var m in Model)
+            {
+                <tr>
+                    <th scope="row">@m.Id</th>
+                    <td>@m.Description</td>
+                    <td>@m.TotalPrice</td>
+                    <td>@m.ReceiptNumber</td>
+                    <td>@m.DatePurchased</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

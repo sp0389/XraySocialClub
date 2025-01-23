@@ -14,14 +14,14 @@ namespace XraySocialClub.Services
             _context = context;
         }
 
-        public async Task <IEnumerable<Purchase>> GetAllPurchaseRecords()
+        public async Task <IEnumerable<Purchase>> GetAllPurchaseRecordsAsync()
         {
             var purchases = await _context.Purchases.ToListAsync();
             return purchases;
         }
 
         //TODO: Create a method to create a purchase record.
-        public async Task<Purchase> CreatePurchaseRecord(PurchaseViewModel m)
+        public async Task<Purchase> CreatePurchaseRecordAsync(PurchaseViewModel m)
         {
             var purchaseRecord = new Purchase(m.Description!, m.TotalPrice!.Value, m.ReceiptNumber!, m.DatePurchased!.Value);
 
@@ -30,10 +30,12 @@ namespace XraySocialClub.Services
                 _context.Purchases.Add(purchaseRecord);
                 await _context.SaveChangesAsync();
             }
+
             else
             {
                 throw new ApplicationException("There was an error creating the purchase record. Please try again.");
             }
+
             return purchaseRecord;
         }
 

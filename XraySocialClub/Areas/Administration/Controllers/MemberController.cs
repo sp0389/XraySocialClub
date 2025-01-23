@@ -92,7 +92,7 @@ namespace XraySocialClub.Areas.Administration.Controllers
 
             try
             {
-                member = await _organisationService.GetMemberByIdAsync(m.Id);
+                member = await _organisationService.GetMemberByIdAsync(m.Id!);
                 
                 if (m.RoleName != null && m.RemoveRole == true)
                 {

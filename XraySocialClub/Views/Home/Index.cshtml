@@ -12,7 +12,7 @@
         }
         else
         {
-            <p class="lead mt-4">Hi @(User.Identity?.Name ?? "User")! What would you like to do today?</p>
+            <p class="lead mt-4">Hi @(User.Identity?.Name ?? "User")! What would you like to do today? &#128512;</p>
         }
     </div>
 </div>
@@ -56,8 +56,8 @@
                             <p class="card-text">View previous purchases or add a new purchase record.</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Create</button>
+                                    <a class="btn btn-sm btn-outline-secondary" asp-area="Administration" asp-controller="Purchase" asp-action="Index">View</a>
+                                    <a class="btn btn-sm btn-outline-secondary" asp-area="Administration" asp-controller="Purchase" asp-action="Create">Create</a>
                                 </div>
                             </div>
                         </div>
