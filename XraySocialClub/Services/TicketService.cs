@@ -38,6 +38,18 @@ namespace XraySocialClub.Services
             return ticket;
         }
 
+        public async Task ArchiveTicketAsync(int ticketId)
+        {
+            //TODO: Needs better error handing and perhaps a bool return type.
+
+            var ticket = await _context.Tickets.FindAsync(ticketId) ?? throw new ApplicationException("No ticket was found with that ID.");
+
+            ticket.SetInitialTicketState(ticket);
+            ticket.ArchiveTicket();
+
+            await _context.SaveChangesAsync();
+        }
+
         public async Task <IEnumerable<Ticket>> GetTicketRecordsForMemberAsync(string memberId)
         {
             var tickets = await _context.TicketRecords
