@@ -21,7 +21,7 @@
         public string Notes { get; set; } = default!;
         public decimal Price { get; set; }
         public TicketType Type { get; set; }
-        public TicketStatus TicketStatus { get; set; }
+        public TicketStatus TicketStatus { get; set; } = TicketStatus.Active;
         public ICollection<TicketRecord> TicketRecords { get; set; } = new List<TicketRecord>();
         private Ticket() { }
         public Ticket(string drawNumber, DateTime drawDate, decimal price, string notes, TicketType ticketType)

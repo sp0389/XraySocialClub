@@ -30,6 +30,7 @@
                 <th scope="col">Price</th>
                 <th scope="col">Notes</th>
                 <th scope="col">Type</th>
+                <th scope="col">Status</th>
                 <th scope="col">Adminstration</th>
             </tr>
         </thead>
@@ -42,6 +43,7 @@
                     <td>@m.Price</td>
                     <td>@m.Notes</td>
                     <td>@m.Type</td>
+                    <td>@m.TicketStatus</td>
                     <td>
                         <a href="@Url.Action("CreateRecord", "Ticket", new { id = m.Id })" class="link-underline-primary">
                             Add

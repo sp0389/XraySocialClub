@@ -11,6 +11,7 @@
             {
                 Registered = DateTime.UtcNow
             };
+            
             return member;
         }
     }

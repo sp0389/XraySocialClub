@@ -21,7 +21,7 @@ namespace XraySocialClub.Services
             return await _context.Tickets.ToListAsync();
         }
 
-        public async Task<Ticket> GetTicketByIdAsync(int id)
+        private async Task<Ticket> GetTicketByIdAsync(int id)
         {
             var ticket = await _context.Tickets.FindAsync(id) ?? throw new ApplicationException("No ticket was found with that ID.");
 
@@ -42,7 +42,7 @@ namespace XraySocialClub.Services
         {
             //TODO: Needs better error handing and perhaps a bool return type.
 
-            var ticket = await _context.Tickets.FindAsync(ticketId) ?? throw new ApplicationException("No ticket was found with that ID.");
+            var ticket = await GetTicketByIdAsync(ticketId) ?? throw new ApplicationException("No ticket was found with that ID.");
 
             ticket.SetInitialTicketState(ticket);
             ticket.ArchiveTicket();

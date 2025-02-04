@@ -7,7 +7,7 @@
         public decimal TotalPrice { get; set; }
         public string ReceiptNumber { get; set; } = default!;
         public DateTime DatePurchased { get; set; }
-
+        private Purchase() {}
         public Purchase(string description, decimal totalPrice, string receiptNumber, DateTime datePurchased)
         {
             Description = description;

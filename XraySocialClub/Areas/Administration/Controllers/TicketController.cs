@@ -66,6 +66,22 @@ namespace XraySocialClub.Areas.Administration.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpDelete]
+        public async Task<IActionResult> Archive(int ticketId)
+        {
+            try
+            {
+                await _ticketService.ArchiveTicketAsync(ticketId);
+            }
+
+            catch (ApplicationException ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+
+            return RedirectToAction("Index");
+        }
+
         [HttpGet]
         public async Task<IActionResult> CreateRecord()
         {
