@@ -31,7 +31,6 @@
             Price = price;
             Notes = notes;
             Type = ticketType;
-            _state = new TicketState.ActiveState(this);
         }
 
         public void UpdateTicketState(TicketState state)
@@ -68,9 +67,9 @@
     {
         public int Id { get; set; }
         public int TicketId { get; set; }
-        public Ticket Ticket { get; set; } = default!;
+        public Ticket Ticket { get; } = default!;
         public string MemberId { get; set; } = default!;
-        public Member Member { get; set; } = default!;
+        public Member Member { get; } = default!;
         private TicketRecord() { }
         public TicketRecord(Ticket ticket, Member member)
         {

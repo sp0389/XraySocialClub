@@ -93,5 +93,18 @@ namespace XraySocialClub.Services
             var sum = await _context.Tickets.SumAsync(t => t.Price);
             return sum;
         }
+
+
+        // TODO: This should correctly give a list of members who bought a specific ticket ID.
+        public async Task <IEnumerable<Member>> GetMembersForTicketAsync(int ticketId)
+        {
+            var members = await _context.TicketRecords
+                .Include(tr => tr.MemberId)
+                .Where(tr => tr.TicketId == ticketId)
+                .Select(tr => tr.Member)
+                .ToListAsync();
+
+            return members;
+        }
     }
 }
