@@ -1,0 +1,8 @@
+﻿@model IEnumerable<Member>
+
+@foreach(var m in Model)
+{
+    <div>
+        <p><strong>Name:</strong> @m.FirstName @m.LastName</p>
+    </div>
+}

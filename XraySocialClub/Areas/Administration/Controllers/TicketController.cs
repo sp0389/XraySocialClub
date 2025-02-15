@@ -129,5 +129,22 @@ namespace XraySocialClub.Areas.Administration.Controllers
             
             return View();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ViewTicketMembers(int id)
+        {
+            try
+            {
+                var members = await _ticketService.GetMembersForTicketAsync(id);
+                return PartialView("_TicketMembersPartial", members);
+            }
+            
+            catch (ApplicationException ex)
+            {
+                TempData["Error"] = ex.Message;    
+            }
+
+            return View();
+        }
     }
 }

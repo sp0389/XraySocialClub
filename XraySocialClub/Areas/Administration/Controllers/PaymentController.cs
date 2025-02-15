@@ -50,10 +50,9 @@ namespace XraySocialClub.Areas.Administration.Controllers
                 try
                 {
                     var paymentRecord = await _paymentService.CreatePaymentRecordForMemberAsync(id, m);
-
                 }
 
-                catch (Exception ex)
+                catch (ApplicationException ex)
                 {
                     TempData["Error"] = ex.Message;
                     return View(m);

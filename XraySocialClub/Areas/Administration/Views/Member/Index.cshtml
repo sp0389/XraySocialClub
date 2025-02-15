@@ -53,6 +53,7 @@
         </table>
     </div>
 </div>
-<a class="btn btn-primary float-end" href="/Administration/Member?isLotto=false">Social Members</a>
-<a class="btn btn-primary float-end me-1" href="/Administration/Member?isLotto=true">Lotto Members</a>
-<a class="btn btn-primary float-end mb-3 me-1" href="/Administration/Member">All Members</a>
+
+<a class="btn btn-primary float-end" asp-action="Index" asp-controller="Member" asp-route-isLotto="false" role="button">Social Members</a>
+<a class="btn btn-primary float-end me-1" asp-action="Index" asp-controller="Member" asp-route-isLotto="true" role="button">Lotto Members</a>
+<a class="btn btn-primary float-end mb-3 me-1" asp-action="Index" asp-controller="Member" role="button">All Members</a>

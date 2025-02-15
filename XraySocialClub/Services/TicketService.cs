@@ -99,7 +99,7 @@ namespace XraySocialClub.Services
         public async Task <IEnumerable<Member>> GetMembersForTicketAsync(int ticketId)
         {
             var members = await _context.TicketRecords
-                .Include(tr => tr.MemberId)
+                .Include(tr => tr.Member)
                 .Where(tr => tr.TicketId == ticketId)
                 .Select(tr => tr.Member)
                 .ToListAsync();

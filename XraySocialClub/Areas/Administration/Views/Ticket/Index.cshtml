@@ -31,7 +31,7 @@
                 <th scope="col">Notes</th>
                 <th scope="col">Type</th>
                 <th scope="col">Status</th>
-                <th scope="col">Adminstration</th>
+                <th scope="col">Manage Members</th>
             </tr>
         </thead>
         <tbody>
@@ -45,10 +45,7 @@
                     <td>@m.Type</td>
                     <td>@m.TicketStatus</td>
                     <td>
-                        <a href="@Url.Action("CreateRecord", "Ticket", new { id = m.Id })" class="link-underline-primary">
-                            Add
-                            Members
-                        </a>
+                    <a href="@Url.Action("CreateRecord", "Ticket", new { id = m.Id })" class="link-underline-primary">Add</a> | <a class="link-underline-primary" style="cursor: pointer" onclick="viewTicketMembers(@m.Id)">View </a>
                 </tr>
             }
         </tbody>
@@ -57,3 +54,35 @@
         <p class="badge text-bg-secondary">Total Spent: @ViewBag.Total</p>
     </div>
 </div>
+
+<div class="modal" id="ticketMembersModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ticket Members</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalBodyContent">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function viewTicketMembers(ticketId) {
+        $.ajax({
+            url: 'Ticket/ViewTicketMembers/' + ticketId,
+            type: 'GET',
+            success: function (data) {
+                $('#modalBodyContent').html(data);
+                $('#ticketMembersModal').modal('show');
+            },
+            error: function () {
+                alert('Failed to load ticket member details.');
+            }
+        });
+    }
+</script>
