@@ -31,7 +31,7 @@
                 <th scope="col">Notes</th>
                 <th scope="col">Type</th>
                 <th scope="col">Status</th>
-                <th scope="col">Manage Members</th>
+                <th scope="col">Manage</th>
             </tr>
         </thead>
         <tbody>
@@ -45,7 +45,16 @@
                     <td>@m.Type</td>
                     <td>@m.TicketStatus</td>
                     <td>
-                    <a href="@Url.Action("CreateRecord", "Ticket", new { id = m.Id })" class="link-underline-primary">Add</a> | <a class="link-underline-primary" style="cursor: pointer" onclick="viewTicketMembers(@m.Id)">View </a>
+                        <a href="@Url.Action("CreateRecord", "Ticket", new { id = m.Id })"
+                            class="link-underline-primary">Add</a> | <a class="link-underline-primary"
+                            style="cursor: pointer" onclick="viewTicketMembers(@m.Id)">View </a> |
+
+                        @if (@m.TicketStatus != TicketStatus.Archived)
+                        {
+                            <a class="link-underline-primary" style="cursor: pointer" onclick="archiveTicket(@m.Id)">Archive
+                            </a>
+                        }
+
                 </tr>
             }
         </tbody>
@@ -82,6 +91,20 @@
             },
             error: function () {
                 alert('Failed to load ticket member details.');
+            }
+        });
+    }
+
+    function archiveTicket(ticketId) {
+        $.ajax({
+            url: 'Ticket/ArchiveTicket/' + ticketId,
+            type: 'POST',
+            success: function () {
+                @* Temp for now change later *@
+                alert("Ticket status updated.");
+            },
+            error: function () {
+                alert("There was an error proccessing the ticket.");
             }
         });
     }

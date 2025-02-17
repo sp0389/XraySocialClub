@@ -66,12 +66,12 @@ namespace XraySocialClub.Areas.Administration.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Archive(int ticketId)
+        [HttpPost]
+        public async Task<IActionResult> ArchiveTicket(int id)
         {
             try
             {
-                await _ticketService.ArchiveTicketAsync(ticketId);
+                await _ticketService.ArchiveTicketAsync(id);
             }
 
             catch (ApplicationException ex)

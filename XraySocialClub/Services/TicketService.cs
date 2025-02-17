@@ -38,11 +38,11 @@ namespace XraySocialClub.Services
             return ticket;
         }
 
-        public async Task ArchiveTicketAsync(int ticketId)
+        public async Task ArchiveTicketAsync(int id)
         {
             //TODO: Needs better error handing and perhaps a bool return type.
 
-            var ticket = await GetTicketByIdAsync(ticketId) ?? throw new ApplicationException("No ticket was found with that ID.");
+            var ticket = await GetTicketByIdAsync(id) ?? throw new ApplicationException("No ticket was found with that ID.");
 
             ticket.SetInitialTicketState(ticket);
             ticket.ArchiveTicket();
