@@ -51,10 +51,9 @@
 
                         @if (@m.TicketStatus != TicketStatus.Archived)
                         {
-                            <a class="link-underline-primary" style="cursor: pointer" onclick="archiveTicket(@m.Id)">Archive
+                            <a class="link-underline-primary" style="cursor: pointer" onclick="confirmTicketArchive(@m.Id)">Archive
                             </a>
                         }
-
                 </tr>
             }
         </tbody>
@@ -80,10 +79,31 @@
     </div>
 </div>
 
+<div class="modal" id="confirmArchiveModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Archive Ticket</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalBodyContent">
+                <p>Are you sure you want to archive this ticket?</p>
+                <strong style="color:red">This action cannot be undone.</strong>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-secondary" onclick="archiveTicket()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-    function viewTicketMembers(ticketId) {
+    var ticketId;
+
+    function viewTicketMembers(id) {
         $.ajax({
-            url: 'Ticket/ViewTicketMembers/' + ticketId,
+            url: 'Ticket/ViewTicketMembers/' + id,
             type: 'GET',
             success: function (data) {
                 $('#modalBodyContent').html(data);
@@ -95,7 +115,7 @@
         });
     }
 
-    function archiveTicket(ticketId) {
+    function archiveTicket() {
         $.ajax({
             url: 'Ticket/ArchiveTicket/' + ticketId,
             type: 'POST',
@@ -107,5 +127,10 @@
                 alert("There was an error proccessing the ticket.");
             }
         });
+    }
+
+    function confirmTicketArchive(id){
+        ticketId = id;
+        $('#confirmArchiveModal').modal('show');
     }
 </script>
