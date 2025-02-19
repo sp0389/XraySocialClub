@@ -18,7 +18,16 @@ namespace XraySocialClub.Services
 
         public async Task <IEnumerable<Ticket>> GetAllTicketsAsync()
         {
-            return await _context.Tickets.ToListAsync();
+            var tickets = await _context.Tickets.ToListAsync();
+
+            return tickets;
+        }
+
+        public async Task <IEnumerable<Ticket>> GetAllActiveTicketsAsync()
+        {
+            var tickets = await _context.Tickets.Where(t => t.TicketStatus == TicketStatus.Active).ToListAsync();
+
+            return tickets;
         }
 
         private async Task<Ticket> GetTicketByIdAsync(int id)
@@ -94,8 +103,6 @@ namespace XraySocialClub.Services
             return sum;
         }
 
-
-        // TODO: This should correctly give a list of members who bought a specific ticket ID.
         public async Task <IEnumerable<Member>> GetMembersForTicketAsync(int ticketId)
         {
             var members = await _context.TicketRecords
@@ -105,6 +112,28 @@ namespace XraySocialClub.Services
                 .ToListAsync();
 
             return members;
+        }
+
+        //TODO: Need to add rest of functionality for this service. (View/Controller etc)
+        public async Task <IEnumerable<Ticket>> GetArchivedTicketsAsync()
+        {
+            var tickets = await _context.Tickets.Where(t => t.TicketStatus == TicketStatus.Archived).ToListAsync();
+
+            return tickets;
+        }
+
+        // TODO: Base implementation of a method to activate a ticket state.
+        public async Task<bool> ActivateTicketAsync(int ticketId)
+        {
+            var ticket = await GetTicketByIdAsync(ticketId);
+
+            if (ticket != null)
+            {
+                ticket.ActiveTicket();
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
     }
 }

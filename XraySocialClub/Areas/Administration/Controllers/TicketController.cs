@@ -17,16 +17,26 @@ namespace XraySocialClub.Areas.Administration.Controllers
         }
 
         [HttpGet]
-        public async Task <IActionResult> Index()
+        public async Task <IActionResult> Index(bool? isActive)
         {
             try
             {
                 ViewBag.Total = await _ticketService.TotalAmountSpentOnTicketsAsync();
-                var tickets = await _ticketService.GetAllTicketsAsync();
-                return View(tickets);
+
+                switch(isActive)
+                {
+                    case true:
+                        var activeTickets = await _ticketService.GetAllActiveTicketsAsync();
+                        return View(activeTickets);
+                    case false:
+                        var archivedTickets = await _ticketService.GetArchivedTicketsAsync();
+                        return View(archivedTickets);
+                    default:
+                        var tickets = await _ticketService.GetAllTicketsAsync();
+                        return View(tickets);
+                }
             }
-            
-            catch(ApplicationException ex)
+            catch (ApplicationException ex)
             {
                 TempData["Error"] = ex.Message;
             }
