@@ -53,12 +53,14 @@
                     <td class="text-center">
                         @if (@m.TicketStatus != TicketStatus.Archived)
                         {
-                            <a class="link-underline-primary" style="cursor: pointer" onclick="confirmTicketArchive(@m.Id)">Archive
+                            <a class="link-underline-primary" style="cursor: pointer"
+                                onclick="confirmTicketArchive(@m.Id)">Archive
                             </a>
                         }
                         else if (@m.TicketStatus == TicketStatus.Archived)
                         {
-                            <a class="link-underline-primary" style="cursor: pointer" onclick="confirmTicketActivate(@m.Id)">Active
+                            <a class="link-underline-primary" style="cursor: pointer"
+                                onclick="confirmTicketActivate(@m.Id)">Active
                             </a>
                         }
                     </td>
@@ -66,10 +68,12 @@
             }
         </tbody>
     </table>
-    
+
     <div class="mb-3">
-        <a class="btn btn-primary float-end" asp-controller="Ticket" asp-action="Index" asp-route-isActive="true">Active</a>
-        <a class="btn btn-primary float-end me-1" asp-controller="Ticket" asp-action="Index" asp-route-isActive="false">Archived</a>
+        <a class="btn btn-primary float-end" asp-controller="Ticket" asp-action="Index"
+            asp-route-isActive="true">Active</a>
+        <a class="btn btn-primary float-end me-1" asp-controller="Ticket" asp-action="Index"
+            asp-route-isActive="false">Archived</a>
         <a class="btn btn-primary float-end me-1" asp-controller="Ticket" asp-action="Index">All</a>
     </div>
     <div class="text-end">
@@ -103,7 +107,6 @@
             </div>
             <div class="modal-body" id="modalBodyContent">
                 <p>Are you sure you want to archive this ticket?</p>
-                <strong style="color:red">This action cannot be undone.</strong>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
@@ -123,7 +126,6 @@
             </div>
             <div class="modal-body" id="modalBodyContent">
                 <p>Are you sure you want to activate this ticket?</p>
-                <strong style="color:red">This action cannot be undone.</strong>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
@@ -154,9 +156,11 @@
         $.ajax({
             url: 'Ticket/ArchiveTicket/' + ticketId,
             type: 'POST',
-            success: function () {
-                @* Temp for now change later *@
-                alert("Ticket status updated.");
+            success: function (res) {
+                if (res.redirectToUrl){
+                    window.location.href = res.redirectToUrl;
+                }
+                $('#confirmArchiveModal').modal('hide');
             },
             error: function () {
                 alert("There was an error proccessing the ticket.");
@@ -164,25 +168,28 @@
         });
     }
 
-    function activateTicket(){
+    function activateTicket() {
         $.ajax({
             url: 'Ticket/ActivateTicket/' + ticketId,
             type: 'POST',
-            success: function(){
-                alert("Ticket status updated.");
+            success: function (res) {
+                if (res.redirectToUrl){
+                    window.location.href = res.redirectToUrl;
+                }
+                $('#confirmActiveModal').modal('hide');
             },
-            error: function(){
+            error: function () {
                 alert("There was an error proccessing the ticket.");
             }
         });
     }
 
-    function confirmTicketArchive(id){
+    function confirmTicketArchive(id) {
         ticketId = id;
         $('#confirmArchiveModal').modal('show');
     }
 
-    function confirmTicketActivate(id){
+    function confirmTicketActivate(id) {
         ticketId = id;
         $('#confirmActiveModal').modal('show');
     }

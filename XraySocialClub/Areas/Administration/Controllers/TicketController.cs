@@ -87,7 +87,7 @@ namespace XraySocialClub.Areas.Administration.Controllers
                 {
                     TempData["Success"] = "Ticket archived successfully.";
                 }
-                
+
                 else
                 {
                     TempData["Error"] = "Ticket could not be archived at this time.";
@@ -96,10 +96,11 @@ namespace XraySocialClub.Areas.Administration.Controllers
 
             catch (ApplicationException ex)
             {
+                // Add to view
                 TempData["Error"] = ex.Message;
             }
 
-            return RedirectToAction("Index");
+            return Json(new { redirectToUrl = Url.Action("Index")});
         }
 
         [HttpPost]
@@ -122,11 +123,11 @@ namespace XraySocialClub.Areas.Administration.Controllers
 
             catch (ApplicationException ex)
             {
-                //TODO: Add to view.
+                // Add to view
                 TempData["Error"] = ex.Message;
             }
 
-            return RedirectToAction("Index");
+            return Json(new { redirectToUrl = Url.Action("Index")});
         }
 
         [HttpGet]
