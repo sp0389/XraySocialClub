@@ -2,7 +2,7 @@ namespace XraySocialClub.Data
 {
     public abstract class TicketState
     {
-        public abstract void ActiveTicket(Ticket ticket);
+        public abstract void ActivateTicket(Ticket ticket);
         public abstract void ArchiveTicket(Ticket ticket);
 
         public class ActiveState : TicketState
@@ -12,7 +12,7 @@ namespace XraySocialClub.Data
                 ticket.TicketStatus = TicketStatus.Active;
             }
 
-            public override void ActiveTicket(Ticket ticket)
+            public override void ActivateTicket(Ticket ticket)
             {
                 throw new InvalidOperationException("You cannot active a ticket that is already active.");
             }
@@ -30,9 +30,9 @@ namespace XraySocialClub.Data
                 ticket.TicketStatus = TicketStatus.Archived;
             }
 
-            public override void ActiveTicket(Ticket ticket)
+            public override void ActivateTicket(Ticket ticket)
             {
-                throw new InvalidOperationException("You cannot activate an archived ticket.");
+                ticket.UpdateTicketState(new ActiveState(ticket));
             }
 
             public override void ArchiveTicket(Ticket ticket)

@@ -81,11 +81,48 @@ namespace XraySocialClub.Areas.Administration.Controllers
         {
             try
             {
-                await _ticketService.ArchiveTicketAsync(id);
+                var ticket = await _ticketService.ArchiveTicketAsync(id);
+
+                if (ticket == true)
+                {
+                    TempData["Success"] = "Ticket archived successfully.";
+                }
+                
+                else
+                {
+                    TempData["Error"] = "Ticket could not be archived at this time.";
+                }
             }
 
             catch (ApplicationException ex)
             {
+                TempData["Error"] = ex.Message;
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ActivateTicket(int id)
+        {
+            try
+            {
+                var ticket = await _ticketService.ActivateTicketAsync(id);
+
+                if (ticket == true)
+                {
+                    TempData["Success"] = "Ticket activated successfully.";
+                }
+
+                else
+                {
+                    TempData["Error"] = "Ticket could not be activated at this time.";
+                }
+            }
+
+            catch (ApplicationException ex)
+            {
+                //TODO: Add to view.
                 TempData["Error"] = ex.Message;
             }
 

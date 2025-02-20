@@ -16,14 +16,14 @@ namespace XraySocialClub.Services
             _organisationService = organisationService;
         }
 
-        public async Task <IEnumerable<Ticket>> GetAllTicketsAsync()
+        public async Task<IEnumerable<Ticket>> GetAllTicketsAsync()
         {
             var tickets = await _context.Tickets.ToListAsync();
 
             return tickets;
         }
 
-        public async Task <IEnumerable<Ticket>> GetAllActiveTicketsAsync()
+        public async Task<IEnumerable<Ticket>> GetAllActiveTicketsAsync()
         {
             var tickets = await _context.Tickets.Where(t => t.TicketStatus == TicketStatus.Active).ToListAsync();
 
@@ -47,40 +47,45 @@ namespace XraySocialClub.Services
             return ticket;
         }
 
-        public async Task ArchiveTicketAsync(int id)
+        public async Task<bool> ArchiveTicketAsync(int id)
         {
-            //TODO: Needs better error handing and perhaps a bool return type.
+            var ticket = await GetTicketByIdAsync(id);
 
-            var ticket = await GetTicketByIdAsync(id) ?? throw new ApplicationException("No ticket was found with that ID.");
-
-            ticket.SetInitialTicketState(ticket);
-            ticket.ArchiveTicket();
-
-            await _context.SaveChangesAsync();
+            if (ticket != null)
+            {
+                ticket.SetInitialTicketState(ticket);
+                ticket.ArchiveTicket();
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        public async Task <IEnumerable<Ticket>> GetTicketRecordsForMemberAsync(string memberId)
+        public async Task<IEnumerable<Ticket>> GetTicketRecordsForMemberAsync(string memberId)
         {
             var tickets = await _context.TicketRecords
                 .Include(tr => tr.Ticket)
                 .Where(tr => tr.MemberId == memberId)
                 .Select(t => t.Ticket)
                 .ToListAsync() ?? throw new ApplicationException("No tickets were found for this member.");
-                
+
             return tickets;
         }
 
         public async Task CreateTicketRecordForMemberAsync(TicketRecordViewModel m)
         {
             var ticket = await GetTicketByIdAsync(m.TicketId);
-  
-            foreach(var memberId in m.SelectedMemberId)
+
+            foreach (var memberId in m.SelectedMemberId)
             {
                 var checkRecordExists = await CheckIfTicketRecordExistsAsync(m.TicketId, memberId);
 
                 if (!checkRecordExists)
                 {
-                    var member = await _organisationService.GetMemberByIdAsync(memberId);  
+                    var member = await _organisationService.GetMemberByIdAsync(memberId);
                     var ticketRecord = new TicketRecord(ticket, member);
                     await _context.TicketRecords.AddAsync(ticketRecord);
                     await _context.SaveChangesAsync();
@@ -93,7 +98,7 @@ namespace XraySocialClub.Services
             var ticketRecord = await _context.TicketRecords
                 .Where(tr => tr.TicketId == ticketId && tr.MemberId == memberId)
                 .AnyAsync();
-                
+
             return ticketRecord;
         }
 
@@ -103,7 +108,7 @@ namespace XraySocialClub.Services
             return sum;
         }
 
-        public async Task <IEnumerable<Member>> GetMembersForTicketAsync(int ticketId)
+        public async Task<IEnumerable<Member>> GetMembersForTicketAsync(int ticketId)
         {
             var members = await _context.TicketRecords
                 .Include(tr => tr.Member)
@@ -115,25 +120,28 @@ namespace XraySocialClub.Services
         }
 
         //TODO: Need to add rest of functionality for this service. (View/Controller etc)
-        public async Task <IEnumerable<Ticket>> GetArchivedTicketsAsync()
+        public async Task<IEnumerable<Ticket>> GetArchivedTicketsAsync()
         {
             var tickets = await _context.Tickets.Where(t => t.TicketStatus == TicketStatus.Archived).ToListAsync();
 
             return tickets;
         }
 
-        // TODO: Base implementation of a method to activate a ticket state.
         public async Task<bool> ActivateTicketAsync(int ticketId)
         {
             var ticket = await GetTicketByIdAsync(ticketId);
 
             if (ticket != null)
             {
-                ticket.ActiveTicket();
+                ticket.SetInitialTicketState(ticket);
+                ticket.ActivateTicket();
                 await _context.SaveChangesAsync();
                 return true;
             }
-            return false;
+            else
+            {
+                return false;
+            }
         }
     }
 }

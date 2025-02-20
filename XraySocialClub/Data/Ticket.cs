@@ -56,10 +56,9 @@
             _state.ArchiveTicket(this);
         }
 
-        //TODO: Right now we have no reason to activate a ticket since tickets are already activated when created, but added for future expansion for now.
-        public void ActiveTicket()
+        public void ActivateTicket()
         {
-            _state.ActiveTicket(this);
+            _state.ActivateTicket(this);
         }
     }
 

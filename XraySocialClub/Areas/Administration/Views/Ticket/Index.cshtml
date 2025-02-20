@@ -32,6 +32,7 @@
                 <th scope="col">Type</th>
                 <th scope="col">Status</th>
                 <th scope="col">Manage</th>
+                <th scope="col">Update</th>
             </tr>
         </thead>
         <tbody>
@@ -44,16 +45,23 @@
                     <td>@m.Notes</td>
                     <td>@m.Type</td>
                     <td>@m.TicketStatus</td>
-                    <td>
+                    <td class="text-center">
                         <a href="@Url.Action("CreateRecord", "Ticket", new { id = m.Id })"
                             class="link-underline-primary">Add</a> | <a class="link-underline-primary"
-                            style="cursor: pointer" onclick="viewTicketMembers(@m.Id)">View </a> |
-
+                            style="cursor: pointer" onclick="viewTicketMembers(@m.Id)">View </a>
+                    </td>
+                    <td class="text-center">
                         @if (@m.TicketStatus != TicketStatus.Archived)
                         {
                             <a class="link-underline-primary" style="cursor: pointer" onclick="confirmTicketArchive(@m.Id)">Archive
                             </a>
                         }
+                        else if (@m.TicketStatus == TicketStatus.Archived)
+                        {
+                            <a class="link-underline-primary" style="cursor: pointer" onclick="confirmTicketActivate(@m.Id)">Active
+                            </a>
+                        }
+                    </td>
                 </tr>
             }
         </tbody>
@@ -61,8 +69,8 @@
     
     <div class="mb-3">
         <a class="btn btn-primary float-end" asp-controller="Ticket" asp-action="Index" asp-route-isActive="true">Active</a>
-
-        <a class="btn btn-primary float-end me-1" asp-asp-controller="Ticket" asp-action="Index" asp-route-isActive="false">Archived</a>
+        <a class="btn btn-primary float-end me-1" asp-controller="Ticket" asp-action="Index" asp-route-isActive="false">Archived</a>
+        <a class="btn btn-primary float-end me-1" asp-controller="Ticket" asp-action="Index">All</a>
     </div>
     <div class="text-end">
         <p class="badge text-bg-secondary">Total Spent: @ViewBag.Total</p>
@@ -85,6 +93,7 @@
     </div>
 </div>
 
+@* Confirmation on archiving a ticket *@
 <div class="modal" id="confirmArchiveModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -99,6 +108,26 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                 <button type="button" class="btn btn-secondary" onclick="archiveTicket()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Confirmation on activating a ticket *@
+<div class="modal" id="confirmActiveModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Archive Ticket</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalBodyContent">
+                <p>Are you sure you want to activate this ticket?</p>
+                <strong style="color:red">This action cannot be undone.</strong>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-secondary" onclick="activateTicket()">Yes</button>
             </div>
         </div>
     </div>
@@ -135,8 +164,26 @@
         });
     }
 
+    function activateTicket(){
+        $.ajax({
+            url: 'Ticket/ActivateTicket/' + ticketId,
+            type: 'POST',
+            success: function(){
+                alert("Ticket status updated.");
+            },
+            error: function(){
+                alert("There was an error proccessing the ticket.");
+            }
+        });
+    }
+
     function confirmTicketArchive(id){
         ticketId = id;
         $('#confirmArchiveModal').modal('show');
+    }
+
+    function confirmTicketActivate(id){
+        ticketId = id;
+        $('#confirmActiveModal').modal('show');
     }
 </script>
