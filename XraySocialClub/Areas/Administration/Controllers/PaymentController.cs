@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using X.PagedList.Extensions;
 using XraySocialClub.Areas.Administration.Models.Payment;
 using XraySocialClub.Data.Core;
 using XraySocialClub.Services;
@@ -14,13 +15,18 @@ namespace XraySocialClub.Areas.Administration.Controllers
             _paymentService = paymentService;
         }
 
-        public async Task<IActionResult> Index(string id)
+        public async Task<IActionResult> Index(string id, int? page)
         {
             try
             {
+                var pageNumber = page ?? 1;
+                var pageSize = 10;
+
                 var paymentRecord = await _paymentService.GetPaymentRecordForMemberAsync(id);
+                var pagedPaymentReconds = paymentRecord.ToPagedList(pageNumber, pageSize);
+
                 ViewBag.PaymentTotal = await _paymentService.GetSumOfMembersPaymentsAsync(id);
-                return View(paymentRecord);
+                return View(pagedPaymentReconds);
             }
 
             catch (ApplicationException ex)

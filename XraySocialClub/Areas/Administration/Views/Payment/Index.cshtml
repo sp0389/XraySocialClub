@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Payment>
+﻿@model IPagedList<Payment>
 
 <div class="container my-5">
     <nav aria-label="breadcrumb">
@@ -57,6 +57,13 @@ https://stackoverflow.com/questions/979532/how-to-get-the-current-route-id-withi
                 }
             </tbody>
         </table>
+
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), 
+            new PagedListRenderOptions {
+                LiElementClasses = new string[] { "page-item" },
+                PageClasses = new string[] { "page-link" }
+        })
+
         <div class="text-end">
             <p class="badge text-bg-secondary">Total: @ViewBag.PaymentTotal</p>
         </div>
