@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using X.PagedList.Extensions;
 using XraySocialClub.Areas.Administration.Models.Member;
 using XraySocialClub.Data;
 using XraySocialClub.Data.Core;
@@ -16,19 +17,25 @@ namespace XraySocialClub.Areas.Administration.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> Index(bool? isLotto)
+        public async Task<IActionResult> Index(bool? isLotto, int? page)
         {
+            int pageNumber = page ?? 1;
+            int pageSize = 5;
+            
             switch (isLotto)
             {
                 case true:
                     var lottoMembers = await _organisationService.GetLottoMembersAsync();
-                    return View(lottoMembers);
+                    var pagedLottoMembers = lottoMembers.ToPagedList(pageNumber, pageSize);
+                    return View(pagedLottoMembers);
                 case false:
                     var socialMembers = await _organisationService.GetSocialMembersAsync();
-                    return View(socialMembers);
+                    var pagedSocialMembers = socialMembers.ToPagedList(pageNumber, pageSize);
+                    return View(pagedSocialMembers);
                 default:
                     var members = await _organisationService.GetAllMembersAsync();
-                    return View(members);
+                    var pagedMembers = members.ToPagedList(pageNumber, pageSize);
+                    return View(pagedMembers);
             }
         }
 

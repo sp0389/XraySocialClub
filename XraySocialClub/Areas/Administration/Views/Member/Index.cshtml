@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Member>
+﻿@model IPagedList<Member>
 
 <div class="container my-5">
     <nav aria-label="breadcrumb">
@@ -40,20 +40,33 @@
                         <td>@m.LastName</td>
                         <td>@m.Email</td>
                         <td>
-                            <a href="@Url.Action("Edit", "Member", new { id = m.Id })" class="link-underline-primary">Update</a> | <a href="@Url.Action("Index", "Payment", new { id = m.Id })" class="link-underline-primary"
-                                                                                                                                      role="button">Payment</a> |
+                            <a href="@Url.Action("Edit", "Member", new { id = m.Id })"
+                                class="link-underline-primary">Update</a> | <a
+                                href="@Url.Action("Index", "Payment", new { id = m.Id })" class="link-underline-primary"
+                                role="button">Payment</a> |
                             @if (m.UserRoles.Contains(Role.Lotto))
                             {
-                                <a href="@Url.Action("TicketRecord", "Ticket", new { id = m.Id })" class="link-underline-primary">Records</a>
+                                <a href="@Url.Action("TicketRecord", "Ticket", new { id = m.Id })"
+                                    class="link-underline-primary">Records</a>
                             }
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
+
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+        new PagedListRenderOptions
+        {
+            LiElementClasses = new string[] { "page-item" },
+            PageClasses = new string[] { "page-link" }
+        })
+
     </div>
 </div>
 
-<a class="btn btn-primary float-end" asp-action="Index" asp-controller="Member" asp-route-isLotto="false" role="button">Social Members</a>
-<a class="btn btn-primary float-end me-1" asp-action="Index" asp-controller="Member" asp-route-isLotto="true" role="button">Lotto Members</a>
+<a class="btn btn-primary float-end" asp-action="Index" asp-controller="Member" asp-route-isLotto="false"
+    role="button">Social Members</a>
+<a class="btn btn-primary float-end me-1" asp-action="Index" asp-controller="Member" asp-route-isLotto="true"
+    role="button">Lotto Members</a>
 <a class="btn btn-primary float-end mb-3 me-1" asp-action="Index" asp-controller="Member" role="button">All Members</a>
