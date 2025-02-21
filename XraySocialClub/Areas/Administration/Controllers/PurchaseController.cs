@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using X.PagedList.Extensions;
 using XraySocialClub.Areas.Administration.Models.Purchase;
 using XraySocialClub.Data.Core;
 using XraySocialClub.Services;
@@ -15,10 +16,25 @@ namespace XraySocialClub.Areas.Administration.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
-            var purchases = await _purchaseService.GetAllPurchaseRecordsAsync();
-            return View(purchases);
+            try
+            {
+                var pageNumber = page ?? 1;
+                var pageSize = 10;
+
+                var purchases = await _purchaseService.GetAllPurchaseRecordsAsync();
+                var pagedPurchases = purchases.ToPagedList(pageNumber, pageSize);
+                
+                return View(pagedPurchases);
+            }
+            
+            catch (ApplicationException ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+
+            return View();
         }
 
         [HttpGet]
