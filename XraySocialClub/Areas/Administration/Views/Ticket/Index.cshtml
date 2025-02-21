@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Ticket>
+﻿@model IPagedList<Ticket>
 
 <div class="container my-5">
     <nav aria-label="breadcrumb">
@@ -68,6 +68,13 @@
             }
         </tbody>
     </table>
+
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }),
+    new PagedListRenderOptions
+    {
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" }
+    })
 
     <div class="mb-3">
         <a class="btn btn-primary float-end" asp-controller="Ticket" asp-action="Index"
@@ -157,7 +164,7 @@
             url: 'Ticket/ArchiveTicket/' + ticketId,
             type: 'POST',
             success: function (res) {
-                if (res.redirectToUrl){
+                if (res.redirectToUrl) {
                     window.location.href = res.redirectToUrl;
                 }
                 $('#confirmArchiveModal').modal('hide');
@@ -173,7 +180,7 @@
             url: 'Ticket/ActivateTicket/' + ticketId,
             type: 'POST',
             success: function (res) {
-                if (res.redirectToUrl){
+                if (res.redirectToUrl) {
                     window.location.href = res.redirectToUrl;
                 }
                 $('#confirmActiveModal').modal('hide');

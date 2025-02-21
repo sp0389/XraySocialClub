@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using X.PagedList.Extensions;
 using XraySocialClub.Areas.Administration.Models.Ticket;
 using XraySocialClub.Data.Core;
 using XraySocialClub.Services;
@@ -17,25 +18,32 @@ namespace XraySocialClub.Areas.Administration.Controllers
         }
 
         [HttpGet]
-        public async Task <IActionResult> Index(bool? isActive)
+        public async Task <IActionResult> Index(bool? isActive, int? page)
         {
             try
             {
+                var pageNumber = page ?? 1;
+                var pageSize = 10;
+
                 ViewBag.Total = await _ticketService.TotalAmountSpentOnTicketsAsync();
 
                 switch(isActive)
                 {
                     case true:
                         var activeTickets = await _ticketService.GetAllActiveTicketsAsync();
-                        return View(activeTickets);
+                        var pagedActiveTickets = activeTickets.ToPagedList(pageNumber, pageSize);
+                        return View(pagedActiveTickets);
                     case false:
                         var archivedTickets = await _ticketService.GetArchivedTicketsAsync();
-                        return View(archivedTickets);
+                        var pagedArchivedTickets = archivedTickets.ToPagedList(pageNumber, pageSize);
+                        return View(pagedArchivedTickets);
                     default:
                         var tickets = await _ticketService.GetAllTicketsAsync();
-                        return View(tickets);
+                        var pagedTickets = tickets.ToPagedList(pageNumber, pageSize);
+                        return View(pagedTickets);
                 }
             }
+            
             catch (ApplicationException ex)
             {
                 TempData["Error"] = ex.Message;
