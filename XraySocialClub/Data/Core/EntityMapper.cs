@@ -71,6 +71,16 @@ namespace XraySocialClub.Data.Core
                 tr.Property(tr => tr.MemberId)
                 .HasColumnName("MemberId");
             });
+
+            mb.Entity<Announcement>(a => {
+                a.HasOne(a => a.Member)
+                .WithMany(a => a.Announcements)
+                .HasForeignKey(a => a.AnnouncementId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                a.Property(a => a.MemberId)
+                .HasColumnName("MemberId");
+            });
         }
     }
 }

@@ -27,6 +27,8 @@ namespace XraySocialClub.Data
         public ICollection<SocialPayment> SocialPayments { get; set; } = new List<SocialPayment>();
         public ICollection<LottoPayment> LottoPayments { get; set; } = new List<LottoPayment>();
         public ICollection<TicketRecord> TicketRecords { get; set; } = new List<TicketRecord>();
+        public ICollection<Announcement> Announcements = new List<Announcement>();
+
         //TODO: public to seed data for now -- change later
         public Member() { }
         
