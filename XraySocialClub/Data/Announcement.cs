@@ -3,11 +3,11 @@ namespace XraySocialClub.Data
     public class Announcement
     {
         public int Id { get; set; }
-        public int AnnouncementId { get; set;}
         public string Title { get; set; } = default!;
         public string MemberId { get; set; } = default!;
         public Member Member { get; set; } = default!;
         public DateTime Date { get; set; }
+        // for image service (cloudinary?)
         public string Image { get; set;} = default!;
         public string Description { get; set; } = default!;
 

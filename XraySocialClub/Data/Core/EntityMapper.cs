@@ -75,7 +75,7 @@ namespace XraySocialClub.Data.Core
             mb.Entity<Announcement>(a => {
                 a.HasOne(a => a.Member)
                 .WithMany(a => a.Announcements)
-                .HasForeignKey(a => a.AnnouncementId)
+                .HasForeignKey(a => a.MemberId)
                 .OnDelete(DeleteBehavior.Restrict);
 
                 a.Property(a => a.MemberId)
