@@ -1,18 +1,18 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using XraySocialClub.Areas.Administration.Controllers;
 using XraySocialClub.Data;
 using XraySocialClub.Data.Core;
 
 namespace XraySocialClub.Services
 {
-    public class OrganisationService
+    public class OrganisationService : BaseService
     {
-        private readonly ApplicationDbContext _context;
         private readonly UserManager<OrganisationUser> _userManager;
 
         public OrganisationService(ApplicationDbContext context, UserManager<OrganisationUser> userManager)
+            : base(context)
         {
-            _context = context;
             _userManager = userManager;
         }
 

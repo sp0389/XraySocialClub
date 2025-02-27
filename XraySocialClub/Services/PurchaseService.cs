@@ -1,20 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using XraySocialClub.Areas.Administration.Controllers;
 using XraySocialClub.Areas.Administration.Models.Purchase;
 using XraySocialClub.Data;
 using XraySocialClub.Data.Core;
 
 namespace XraySocialClub.Services
 {
-    public class PurchaseService
+    public class PurchaseService : BaseService
     {
-        private readonly ApplicationDbContext _context;
-
         public PurchaseService(ApplicationDbContext context, OrganisationService organisationService)
-        {
-            _context = context;
-        }
-
-        public async Task <IEnumerable<Purchase>> GetAllPurchaseRecordsAsync()
+            : base(context) { }
+        public async Task<IEnumerable<Purchase>> GetAllPurchaseRecordsAsync()
         {
             var purchases = await _context.Purchases.ToListAsync();
             return purchases;

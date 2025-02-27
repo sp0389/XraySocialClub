@@ -8,6 +8,7 @@
             services.AddScoped<PaymentService>();
             services.AddScoped<TicketService>();
             services.AddScoped<PurchaseService>();
+            services.AddScoped<AnnouncementService>();
 
             return services;
         }

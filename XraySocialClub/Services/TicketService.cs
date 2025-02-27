@@ -1,18 +1,18 @@
 using Microsoft.EntityFrameworkCore;
+using XraySocialClub.Areas.Administration.Controllers;
 using XraySocialClub.Areas.Administration.Models.Ticket;
 using XraySocialClub.Data;
 using XraySocialClub.Data.Core;
 
 namespace XraySocialClub.Services
 {
-    public class TicketService
+    public class TicketService : BaseService
     {
-        private readonly ApplicationDbContext _context;
         private readonly OrganisationService _organisationService;
 
         public TicketService(ApplicationDbContext context, OrganisationService organisationService)
+            : base(context)
         {
-            _context = context;
             _organisationService = organisationService;
         }
 
