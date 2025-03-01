@@ -47,5 +47,12 @@ namespace XraySocialClub.Data
             LottoPayments.Add(lottoPayment);
             return lottoPayment;
         }
+
+        public Announcement NewAnnouncement(string title, Member member, DateTime date, string image, string description)
+        {
+            var announcement = new Announcement(title, member, date, image, description);
+
+            return announcement;
+        }
     }
 }

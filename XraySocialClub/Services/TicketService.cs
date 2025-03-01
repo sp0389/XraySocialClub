@@ -55,13 +55,9 @@ namespace XraySocialClub.Services
             {
                 ticket.SetInitialTicketState(ticket);
                 ticket.ArchiveTicket();
-                await _context.SaveChangesAsync();
-                return true;
             }
-            else
-            {
-                return false;
-            }
+            
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<IEnumerable<Ticket>> GetTicketRecordsForMemberAsync(string memberId)
@@ -135,13 +131,9 @@ namespace XraySocialClub.Services
             {
                 ticket.SetInitialTicketState(ticket);
                 ticket.ActivateTicket();
-                await _context.SaveChangesAsync();
-                return true;
             }
-            else
-            {
-                return false;
-            }
+            
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using X.PagedList.Extensions;
+using XraySocialClub.Areas.Administration.Models.Announcement;
 using XraySocialClub.Data.Core;
 using XraySocialClub.Services;
+using System.Security.Claims;
 
 namespace XraySocialClub.Areas.Administration.Controllers
 {
@@ -14,6 +16,7 @@ namespace XraySocialClub.Areas.Administration.Controllers
             _announcementService = announcementService;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index(int? page)
         {
             try
@@ -33,6 +36,28 @@ namespace XraySocialClub.Areas.Administration.Controllers
             }
 
             return View();
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult>Create(AnnouncementViewModel m)
+        {
+            var memberId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var announcement = await _announcementService.CreateNewAnnouncementAsync(m, memberId!.ToString());
+                    RedirectToAction("Index");
+                }
+
+                catch (ApplicationException ex)
+                {
+                    TempData["Error"] = ex.Message;
+                }
+            }
+
+            return View(m);
         }
     }
 }

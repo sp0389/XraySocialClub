@@ -16,7 +16,7 @@ namespace XraySocialClub.Data
         public Announcement (string title, Member member, DateTime date, string image, string description)
         {
             Title = title;
-            Member = member;
+            MemberId = member.Id;
             Date = date;
             Image = image;
             Description = description;
