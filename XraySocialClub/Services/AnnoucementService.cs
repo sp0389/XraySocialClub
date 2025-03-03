@@ -20,6 +20,7 @@ namespace XraySocialClub.Services
         public async Task<IEnumerable<Announcement>> GetAllAnnouncements()
         {
             var announcements = await _context.Announcements
+                .Include(a => a.Member)
                 .OrderByDescending(a => a.Id).ToListAsync();
 
             return announcements;
