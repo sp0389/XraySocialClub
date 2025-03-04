@@ -37,6 +37,12 @@ namespace XraySocialClub.Areas.Administration.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
         
         [HttpPost]
         public async Task<IActionResult>Create(AnnouncementViewModel m)

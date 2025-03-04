@@ -8,17 +8,17 @@ namespace XraySocialClub.Data
         public Member Member { get; set; } = default!;
         public DateTime Date { get; set; }
         // for image service (cloudinary?)
-        public string Image { get; set;} = default!;
+        public string ImageUrl { get; set;} = default!;
         public string Description { get; set; } = default!;
 
         private Announcement() {}
 
-        public Announcement (string title, Member member, DateTime date, string image, string description)
+        public Announcement (string title, Member member, DateTime date, string imageUrl, string description)
         {
             Title = title;
             MemberId = member.Id;
             Date = date;
-            Image = image;
+            ImageUrl = imageUrl;
             Description = description;
         }
     }

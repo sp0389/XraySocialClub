@@ -30,7 +30,7 @@ namespace XraySocialClub.Services
         {
             var member = await _organisationService.GetMemberByIdAsync(id);
 
-            var announcement = member.NewAnnouncement(m.Title!, member, m.Date!.Value, m.Image!, m.Description!);
+            var announcement = member.NewAnnouncement(m.Title!, member, m.Date!.Value, m.ImageUrl!, m.Description!);
 
             await _context.AddAsync(announcement);
             return await _context.SaveChangesAsync() > 0;
