@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using XraySocialClub.Data;
 using XraySocialClub.Data.Core;
-using XraySocialClub.Services;
+using XraySocialClub.Helpers;
 
 namespace XraySocialClub
 {
@@ -17,7 +17,11 @@ namespace XraySocialClub
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+            
+            // Add Cloudinary settings
+            builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 
+            // Add Identity requirements
             builder.Services.AddDefaultIdentity<OrganisationUser>(o =>
             {
                 o.SignIn.RequireConfirmedAccount = false;

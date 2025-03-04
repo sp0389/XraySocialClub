@@ -53,8 +53,8 @@ namespace XraySocialClub.Areas.Administration.Controllers
             {
                 try
                 {
-                    var announcement = await _announcementService.CreateNewAnnouncementAsync(m, memberId!.ToString());
-                    RedirectToAction("Index");
+                    var announcement = await _announcementService.CreateNewAnnouncementAsync(m, memberId!.Value);
+                    return RedirectToAction("Index");
                 }
 
                 catch (ApplicationException ex)

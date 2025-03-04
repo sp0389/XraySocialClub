@@ -8,21 +8,21 @@
     <h1 class="display-5 fw-bold">@ViewData["Title"]</h1>
 </div>
 
-<form method="post" asp-controller="Announcement" asp-action="Create" enctype="multipart/form-data">
+<form method="post" asp-action="Create" enctype="multipart/form-data">
     <div class="card p-4 shadow-lg mb-3">
         <div class="form-floating mb-3">
-            <input type="Title" class="form-control" id="title" placeholder="">
+            <input asp-for="Title" class="form-control" id="title" placeholder="">
             <label asp-for="Title">Title</label>
             <span asp-validation-for="Title" class="text-danger"></span>
         </div>
         <div class="form-floating mb-3">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="">
+            <input asp-for="Description" class="form-control" id="description" placeholder="">
             <label asp-for="Description">Description</label>
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
         <div class="mb-3">
+            <input asp-for="Image" class="form-control" type="file" id="formFile">
             <label asp-for="Image" class="form-label">Upload an image...</label>
-            <input class="form-control" type="file" id="formFile">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>

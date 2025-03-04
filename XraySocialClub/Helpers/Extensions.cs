@@ -1,4 +1,6 @@
-﻿namespace XraySocialClub.Services
+﻿using XraySocialClub.Services;
+
+namespace XraySocialClub.Helpers
 {
     public static class Extensions
     {
@@ -9,6 +11,7 @@
             services.AddScoped<TicketService>();
             services.AddScoped<PurchaseService>();
             services.AddScoped<AnnouncementService>();
+            services.AddScoped<ImageService>();
 
             return services;
         }
