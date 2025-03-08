@@ -21,8 +21,8 @@
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
         <div class="mb-3">
+            <label asp-for="Image" class="form-label mb-3">Upload an image...</label>
             <input asp-for="Image" class="form-control" type="file" id="formFile">
-            <label asp-for="Image" class="form-label">Upload an image...</label>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>

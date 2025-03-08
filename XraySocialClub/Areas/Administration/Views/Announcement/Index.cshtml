@@ -10,15 +10,24 @@
 
 @foreach (var m in Model)
 {
-    <div class="card text-center shadow-sm">
-        @*TODO: Image placeholder *@
-        <img src="..." class="card-img-top" alt="...">
+    <div class="card text-center shadow-sm mb-5">
+        @*TODO: Image placeholder: need to scale image to an ok size *@
+        
+        @if (m.ImageUrl == null)
+        {
+            @*TODO: Set an actual placeholder image here*@
+            <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
+        }
+        else
+        {
+            <img src="@m.ImageUrl" class="card-img-top" alt="...">
+        }
         <div class="card-body">
             <h5 class="card-title">@m.Title</h5>
             <p class="card-text">@m.Description</p>
             <a href="#" class="btn btn-primary">Go somewhere</a>
         </div>
-        <div class="card-footer text-body-secondary">
+        <div class="card-footer text-body-secondary small text-muted">
             @Extensions.AsTimeAgo(m.Date) by @m.Member.FirstName @m.Member.LastName
         </div>
     </div>
