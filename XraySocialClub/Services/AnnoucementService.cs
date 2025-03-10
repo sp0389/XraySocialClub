@@ -32,8 +32,11 @@ namespace XraySocialClub.Services
         {
             var member = await _organisationService.GetMemberByIdAsync(id);
             
-            var getImage = await _imageService.AddImageAsync(m.Image!);
-            m.ImageUrl = getImage.Url.ToString();
+            if (m.Image != null)
+            {
+                var getImage = await _imageService.AddImageAsync(m.Image!);
+                m.ImageUrl = getImage.Url.ToString();
+            }
             
             var announcement = member.NewAnnouncement(m.Title!, member, m.Date!, m.ImageUrl!, m.Description!);
 

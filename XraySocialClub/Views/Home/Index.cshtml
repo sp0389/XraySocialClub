@@ -1,19 +1,22 @@
-﻿<div class="px-4 py-5 my-5 text-center">
-    <img class="d-block mx-auto mb-4" src="" alt="" width="100" height="80">
-    <h1 class="display-5 fw-bold">Welcome to XraySocialClub!</h1>
-    <div class="col-lg-6 mx-auto">
-        @if (User.Identity != null && !User.Identity.IsAuthenticated)
-        {
-            <p class="lead mb-4">Log in with an existing account or sign up with us today!</p>
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <a class="btn btn-primary btn-lg px-4 gap-3" asp-area="Identity" asp-page="/Account/Register">Sign Up</a>
-                <a class="btn btn-outline-secondary btn-lg px-4" asp-area="Identity" asp-page="/Account/Login">Log In</a>
-            </div>
-        }
-        else
-        {
-            <p class="lead mt-4">Hi @(User.Identity?.Name ?? "User")! What would you like to do today? &#128512;</p>
-        }
+﻿<div class="bg-dark text-secondary px-4 py-5 text-center rounded mb-4">
+    <div class="py-5">
+        <h1 class="display-5 fw-bold text-white">Welcome to XraySocialClub!</h1>
+        <div class="col-lg-6 mx-auto">
+            @if (User.Identity != null && !User.Identity.IsAuthenticated)
+            {
+                <p class="lead mb-4">Log in with an existing account or sign up with us today!</p>
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <a class="btn btn-primary btn-lg px-4 gap-3" asp-area="Identity" asp-page="/Account/Register">Sign
+                        Up</a>
+                    <a class="btn btn-outline-secondary btn-lg px-4" asp-area="Identity" asp-page="/Account/Login">Log
+                        In</a>
+                </div>
+            }
+            else
+            {
+                <p class="lead mt-4">Hi @(User.Identity?.Name ?? "User")! What would you like to do today? &#128512;</p>
+            }
+        </div>
     </div>
 </div>
 
@@ -24,12 +27,29 @@
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 <div class="col">
                     <div class="card shadow-sm">
+                        <img src="~/images/information.jpg" alt="Purchase Record" />
+                        <div class="card-body">
+                            <p class="card-text">Add a new announcement or view previous announcements.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a class="btn btn-sm btn-outline-secondary" asp-area="Administration"
+                                        asp-controller="Announcement" asp-action="Index">View</a>
+                                    <a class="btn btn-sm btn-outline-secondary" asp-area="Administration"
+                                        asp-controller="Announcement" asp-action="Create">Create</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card shadow-sm">
                         <img src="~/images/register.jpg" alt="Register Member Log" />
                         <div class="card-body">
                             <p class="card-text">Register new members, update payment records, and assign roles.</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a class="btn btn-sm btn-outline-secondary" asp-area="Administration" asp-controller="Member" asp-action="Index">Manage</a>
+                                    <a class="btn btn-sm btn-outline-secondary" asp-area="Administration"
+                                        asp-controller="Member" asp-action="Index">Manage</a>
                                 </div>
                             </div>
                         </div>
@@ -42,22 +62,26 @@
                             <p class="card-text">View previous purchased ticket records or add a new ticket record.</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a class="btn btn-sm btn-outline-secondary" asp-area="Administration" asp-controller="Ticket" asp-action="Index">View</a>
-                                    <a class="btn btn-sm btn-outline-secondary" asp-area="Administration" asp-controller="Ticket" asp-action="Create">Create</a>
+                                    <a class="btn btn-sm btn-outline-secondary" asp-area="Administration"
+                                        asp-controller="Ticket" asp-action="Index">View</a>
+                                    <a class="btn btn-sm btn-outline-secondary" asp-area="Administration"
+                                        asp-controller="Ticket" asp-action="Create">Create</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col mx-auto">
                     <div class="card shadow-sm">
                         <img src="~/images/purchase.jpg" alt="Purchase Record" />
                         <div class="card-body">
                             <p class="card-text">View previous purchases or add a new purchase record.</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a class="btn btn-sm btn-outline-secondary" asp-area="Administration" asp-controller="Purchase" asp-action="Index">View</a>
-                                    <a class="btn btn-sm btn-outline-secondary" asp-area="Administration" asp-controller="Purchase" asp-action="Create">Create</a>
+                                    <a class="btn btn-sm btn-outline-secondary" asp-area="Administration"
+                                        asp-controller="Purchase" asp-action="Index">View</a>
+                                    <a class="btn btn-sm btn-outline-secondary" asp-area="Administration"
+                                        asp-controller="Purchase" asp-action="Create">Create</a>
                                 </div>
                             </div>
                         </div>

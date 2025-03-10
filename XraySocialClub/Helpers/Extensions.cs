@@ -18,7 +18,8 @@ namespace XraySocialClub.Helpers
 
         public static string AsTimeAgo(this DateTime dateTime)
         {
-            TimeSpan timeSpan = DateTime.Now.Subtract(dateTime);
+            DateTime convertedDateTime = dateTime.ToLocalTime();
+            TimeSpan timeSpan = DateTime.Now.Subtract(convertedDateTime);
 
             return timeSpan.TotalSeconds switch
             {

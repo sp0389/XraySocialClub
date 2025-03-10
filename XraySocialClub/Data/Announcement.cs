@@ -7,7 +7,6 @@ namespace XraySocialClub.Data
         public string MemberId { get; set; } = default!;
         public Member Member { get; set; } = default!;
         public DateTime Date { get; set; }
-        // for image service (cloudinary?)
         public string ImageUrl { get; set;} = default!;
         public string Description { get; set; } = default!;
 
