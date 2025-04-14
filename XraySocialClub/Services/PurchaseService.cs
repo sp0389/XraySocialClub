@@ -35,5 +35,17 @@ namespace XraySocialClub.Services
         }
 
         //TODO: Create a method to get a purchase record details by ID.
+
+        public async Task<Purchase> GetPurchaseRecordByIdAsync(int id)
+        {
+            var purchaseRecord = await _context.Purchases.FindAsync(id);
+
+            if (purchaseRecord == null)
+            {
+                throw new ArgumentException("No purchase record was found with the specified ID.");
+            }
+
+            return purchaseRecord;
+        }
     }
 }

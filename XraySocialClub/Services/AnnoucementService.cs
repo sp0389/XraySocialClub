@@ -4,7 +4,6 @@ using XraySocialClub.Areas.Administration.Models.Announcement;
 using XraySocialClub.Data;
 using XraySocialClub.Data.Core;
 
-
 namespace XraySocialClub.Services
 {
     public class AnnouncementService : BaseService
@@ -19,11 +18,22 @@ namespace XraySocialClub.Services
             _imageService = imageService;
         }
 
-        public async Task<IEnumerable<Announcement>> GetAllAnnouncements()
+        public async Task<IEnumerable<Announcement>> GetAllAnnouncementsAsync()
         {
             var announcements = await _context.Announcements
                 .Include(a => a.Member)
                 .OrderByDescending(a => a.Id).ToListAsync();
+
+            return announcements;
+        }
+
+        public async Task<IEnumerable<Announcement>> GetLastThreeAnnouncementsAsync()
+        {
+            var announcements = await _context.Announcements
+                .Include(a => a.Member)
+                .OrderByDescending(a => a.Id)
+                .Take(3)
+                .ToListAsync();
 
             return announcements;
         }

@@ -24,7 +24,7 @@ namespace XraySocialClub.Areas.Administration.Controllers
                 var pageNumber = page ?? 1;
                 var pageSize = 10;
 
-                var announcements = await _announcementService.GetAllAnnouncements();
+                var announcements = await _announcementService.GetAllAnnouncementsAsync();
                 var pagedAnnouncements = announcements.ToPagedList(pageNumber, pageSize);
                 
                 return View(pagedAnnouncements);
