@@ -50,9 +50,19 @@ namespace XraySocialClub.Data.Core
                 .HasForeignKey(tr => tr.MemberId)
                 .OnDelete(DeleteBehavior.Restrict); 
 
-                m.HasMany(sm => sm.SocialPayments)
+                m.HasMany(m => m.SocialPayments)
                 .WithOne(sp => sp.Member)
                 .HasForeignKey(sp => sp.MemberId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                m.HasMany(m => m.Announcements)
+                .WithOne(a => a.Member)
+                .HasForeignKey(a => a.MemberId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                m.HasMany(m => m.Comments)
+                .WithOne(c => c.Member)
+                .HasForeignKey(c => c.MemberId)
                 .OnDelete(DeleteBehavior.Restrict);
             });
 
@@ -67,19 +77,31 @@ namespace XraySocialClub.Data.Core
                 .WithMany(t => t.TicketRecords)
                 .HasForeignKey(tr => tr.TicketId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-                tr.Property(tr => tr.MemberId)
-                .HasColumnName("MemberId");
             });
 
             mb.Entity<Announcement>(a => {
                 a.HasOne(a => a.Member)
-                .WithMany(a => a.Announcements)
+                .WithMany(m => m.Announcements)
                 .HasForeignKey(a => a.MemberId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-                a.Property(a => a.MemberId)
-                .HasColumnName("MemberId");
+                a.HasMany(a => a.Comments)
+                .WithOne(c => c.Announcement)
+                .HasForeignKey(c => c.AnnouncementId)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            mb.Entity<Comment>(c =>
+            {
+                c.HasOne(c => c.Member)
+                .WithMany(m => m.Comments)
+                .HasForeignKey(c => c.MemberId)
+                .OnDelete(DeleteBehavior.Restrict);
+                
+                c.HasOne(c => c.Announcement)
+                .WithMany(a => a.Comments)
+                .HasForeignKey(c => c.AnnouncementId)
+                .OnDelete(DeleteBehavior.Restrict);
             });
         }
     }
