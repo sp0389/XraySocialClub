@@ -38,6 +38,18 @@ namespace XraySocialClub.Services
             return announcements;
         }
 
+        public async Task<Announcement> GetAnnouncementByIdAsync(int id)
+        {
+            var announcement = await _context.Announcements.FindAsync(id);
+
+            if (announcement == null)
+            {
+                throw new ApplicationException("No announcement was found with that specified ID.");
+            }
+
+            return announcement;
+        }
+
         public async Task<bool> CreateNewAnnouncementAsync(AnnouncementViewModel m, string id)
         {
             var member = await _organisationService.GetMemberByIdAsync(id);

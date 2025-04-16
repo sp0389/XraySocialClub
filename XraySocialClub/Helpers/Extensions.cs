@@ -11,6 +11,7 @@ namespace XraySocialClub.Helpers
             services.AddScoped<TicketService>();
             services.AddScoped<PurchaseService>();
             services.AddScoped<AnnouncementService>();
+            services.AddScoped<CommentService>();
             services.AddScoped<ImageService>();
 
             return services;

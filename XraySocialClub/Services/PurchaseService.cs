@@ -42,7 +42,7 @@ namespace XraySocialClub.Services
 
             if (purchaseRecord == null)
             {
-                throw new ArgumentException("No purchase record was found with the specified ID.");
+                throw new ApplicationException("No purchase record was found with the specified ID.");
             }
 
             return purchaseRecord;
