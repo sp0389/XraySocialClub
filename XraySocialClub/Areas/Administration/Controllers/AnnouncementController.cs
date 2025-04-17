@@ -10,10 +10,13 @@ namespace XraySocialClub.Areas.Administration.Controllers
     public class AnnouncementController : AdministrationController
     {
         private readonly AnnouncementService _announcementService;
-        public AnnouncementController(ApplicationDbContext context, ILogger<AnnouncementController> logger, AnnouncementService announcementService)
+        private readonly CommentService _commentService;
+        public AnnouncementController(ApplicationDbContext context, ILogger<AnnouncementController> logger, AnnouncementService announcementService,
+            CommentService commentService)
             : base(context, logger)
         {
             _announcementService = announcementService;
+            _commentService = commentService;
         }
 
         [HttpGet]
@@ -65,6 +68,12 @@ namespace XraySocialClub.Areas.Administration.Controllers
 
             return View(m);
         }
+
+        [HttpGet]
+        public async Task<IActionResult>GetAnnouncementCommentsAsync()
+        {
+            var comments = await _commentService.GetCommentsAsync();
+            return PartialView("_AnnouncementCommentsPartial", comments);
+        }
     }
 }
-

@@ -36,6 +36,19 @@
             <h5 class="card-title">@m.Title</h5>
             <p class="card-text">@m.Description</p>
         </div>
+   
+        <div>
+            <button class="btn btn-link float-end mb-3" type="button" onclick="getAnnouncementComments(@m.Id)" data-bs-toggle="collapse" data-bs-target="#collapseComments">
+                Comments
+            </button>
+        </div>
+
+        <div class="collapse" id="collapseComments">
+            <div class="card card-body">
+               
+            </div>
+        </div>
+               
         <div class="card-footer text-body-secondary small text-muted"> 
             @Extensions.AsTimeAgo(m.Date) by @m.Member.FirstName @m.Member.LastName
         </div>
@@ -48,3 +61,18 @@ new PagedListRenderOptions
     LiElementClasses = new string[] { "page-item" },
     PageClasses = new string[] { "page-link" }
 })
+
+<script>
+    function getAnnouncementComments(id){
+        $.ajax({
+            url: 'Announcement/GetAnnouncementComments/' + id,
+            type: 'GET',
+            success: function(data){
+                $('#collapseComments').html(data);
+            },
+            error: function() {
+                alert("There was a problem getting the comment section of this announcement.");
+            }
+        });
+    }
+</script>
