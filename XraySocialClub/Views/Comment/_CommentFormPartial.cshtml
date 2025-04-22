@@ -1,0 +1,9 @@
+﻿@model CommentViewModel
+
+<form asp-controller="Comment" asp-action="Create" method="post">
+	<div class="form-floating mb-3 mx-auto" style="width:50%">
+		<input asp-for="Message" class="form-control" placeholder="">
+		<label asp-for="Message">Message</label>
+		<span asp-validation-for="Message" class="text-danger"></span>
+	</div>
+</form>

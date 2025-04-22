@@ -41,11 +41,18 @@
             <button class="btn btn-link float-end mb-3" type="button" onclick="getAnnouncementComments(@m.Id)" data-bs-toggle="collapse" data-bs-target="#collapseComments">
                 Comments
             </button>
+            <button class="btn btn-link float-start mb-3" type="button" onclick="getAnnoucementCommentForm(@m.Id)" data-bs-toggle="collapse" data-bs-target="#collapseCommentForm">
+                Reply
+            </button>
         </div>
 
         <div class="collapse" id="collapseComments">
             <div class="card card-body">
-               
+            </div>
+        </div>
+
+        <div class="collapse" id="collapseCommentForm">
+            <div class="card card-body">
             </div>
         </div>
                
@@ -72,6 +79,19 @@ new PagedListRenderOptions
             },
             error: function() {
                 alert("There was a problem getting the comment section of this announcement.");
+            }
+        });
+    }
+
+    function getAnnoucementCommentForm(id){
+        $.ajax({
+            url: '@Url.Action("Create", "Comment", new { Area = "" })/' + id,
+            type: 'GET',
+            success: function(data){
+                $('#collapseCommentForm').html(data);
+            },
+            error: function(){
+                alert("There was a problem loading the form.");
             }
         });
     }

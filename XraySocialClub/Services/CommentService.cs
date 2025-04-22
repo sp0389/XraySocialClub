@@ -30,7 +30,7 @@ namespace XraySocialClub.Services
             var member = await _organisationService.GetMemberByIdAsync(memberId);
             var announcement = await _announcementService.GetAnnouncementByIdAsync(announcementId);
 
-            var comment = new Comment(m.Title, member, m.Message, m.CreatedAt, m.UpdatedAt, announcement);
+            var comment = new Comment(member, m.Message, m.CreatedAt, m.UpdatedAt, announcement);
 
             return comment;
         }
