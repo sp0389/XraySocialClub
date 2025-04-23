@@ -50,13 +50,13 @@ namespace XraySocialClub.Areas.Administration.Controllers
         [HttpPost]
         public async Task<IActionResult>Create(AnnouncementViewModel m)
         {
-            var memberId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            var memberId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "Not found.";
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var announcement = await _announcementService.CreateNewAnnouncementAsync(m, memberId!.Value);
+                    var announcement = await _announcementService.CreateNewAnnouncementAsync(m, memberId);
                     return RedirectToAction("Index");
                 }
 
@@ -70,9 +70,10 @@ namespace XraySocialClub.Areas.Administration.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult>GetAnnouncementCommentsAsync()
+        public async Task<IActionResult>GetAnnouncementCommentsById(int id)
         {
-            var comments = await _commentService.GetCommentsAsync();
+            var comments = await _commentService.GetCommentsByAnnouncementId(id);
+
             return PartialView("_AnnouncementCommentsPartial", comments);
         }
     }

@@ -25,12 +25,25 @@ namespace XraySocialClub.Services
             return comments;
         }
 
+        public async Task<IEnumerable<Comment>> GetCommentsByAnnouncementId(int announcementId)
+        {
+            var comments = await _context.Comments
+                .Include(c => c.Member)
+                .Where(c => c.AnnouncementId == announcementId)
+                .ToListAsync();
+
+            return comments;
+        }
+
         public async Task<Comment> CreateNewCommentAsync(CommentViewModel m, string memberId, int announcementId)
         {
             var member = await _organisationService.GetMemberByIdAsync(memberId);
             var announcement = await _announcementService.GetAnnouncementByIdAsync(announcementId);
 
             var comment = new Comment(member, m.Message, m.CreatedAt, m.UpdatedAt, announcement);
+            
+            await _context.AddAsync(comment);
+            await _context.SaveChangesAsync();
 
             return comment;
         }

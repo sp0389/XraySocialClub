@@ -27,7 +27,7 @@ namespace XraySocialClub.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CommentViewModel m, int announcementId)
+        public async Task<IActionResult> Create(CommentViewModel m, int id)
         {
             if(ModelState.IsValid)
             {
@@ -35,11 +35,10 @@ namespace XraySocialClub.Controllers
                 
                 try
                 {
-                    var comment = await _commentService.CreateNewCommentAsync(m, memberId, announcementId);
+                    var comment = await _commentService.CreateNewCommentAsync(m, memberId, id);
                     var comments = await _commentService.GetCommentsAsync();
                     
-                    //TODO: Could need adjusting later.
-                    return PartialView("_AnnouncementCommentPartial", comments);
+                    return RedirectToAction("Index", "Announcement", new { area = "Administration" });
                 }
 
                 catch(ApplicationException ex)

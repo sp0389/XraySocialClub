@@ -38,25 +38,26 @@
         </div>
    
         <div>
-            <button class="btn btn-link float-end mb-3" type="button" onclick="getAnnouncementComments(@m.Id)" data-bs-toggle="collapse" data-bs-target="#collapseComments">
+            <button class="btn btn-link float-end mb-3" type="button" onclick="getAnnouncementComments(@m.Id)" data-bs-toggle="collapse" data-bs-target="#collapseComments-@m.Id">
                 Comments
             </button>
-            <button class="btn btn-link float-start mb-3" type="button" onclick="getAnnoucementCommentForm(@m.Id)" data-bs-toggle="collapse" data-bs-target="#collapseCommentForm">
+
+            <button class="btn btn-link float-start mb-3" type="button" onclick="getAnnoucementCommentForm(@m.Id)" data-bs-toggle="collapse" data-bs-target="#collapseCommentForm-@m.Id">
                 Reply
             </button>
         </div>
 
-        <div class="collapse" id="collapseComments">
-            <div class="card card-body">
+        <div class="collapse mb-3" id="collapseComments-@m.Id">
+            <div class="card card-body mx-auto shadow-sm" id="commentsBody-@m.Id" style="width: 75%">
             </div>
         </div>
 
-        <div class="collapse" id="collapseCommentForm">
-            <div class="card card-body">
+        <div class="collapse mb-3" id="collapseCommentForm-@m.Id">
+            <div class="card card-body mx-auto shadow-sm" id="commentFormBody-@m.Id" style="width: 75%">
             </div>
         </div>
                
-        <div class="card-footer text-body-secondary small text-muted"> 
+        <div class="card-footer text-body-secondary small text-muted">
             @Extensions.AsTimeAgo(m.Date) by @m.Member.FirstName @m.Member.LastName
         </div>
     </div>
@@ -72,10 +73,10 @@ new PagedListRenderOptions
 <script>
     function getAnnouncementComments(id){
         $.ajax({
-            url: 'Announcement/GetAnnouncementComments/' + id,
+            url: 'Announcement/GetAnnouncementCommentsById/' + id,
             type: 'GET',
             success: function(data){
-                $('#collapseComments').html(data);
+                $('#commentsBody-' + id).html(data);
             },
             error: function() {
                 alert("There was a problem getting the comment section of this announcement.");
@@ -88,7 +89,7 @@ new PagedListRenderOptions
             url: '@Url.Action("Create", "Comment", new { Area = "" })/' + id,
             type: 'GET',
             success: function(data){
-                $('#collapseCommentForm').html(data);
+                $('#commentFormBody-' + id).html(data);
             },
             error: function(){
                 alert("There was a problem loading the form.");
