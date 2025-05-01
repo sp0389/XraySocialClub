@@ -133,6 +133,7 @@ namespace XraySocialClub.Areas.Administration.Controllers
             {
                 // Add to view
                 TempData["Error"] = ex.Message;
+                _logger.LogError(ex, "There was an error activating the ticket.");
             }
 
             return Json(new { redirectToUrl = Url.Action("Index")});
@@ -162,6 +163,7 @@ namespace XraySocialClub.Areas.Administration.Controllers
                 catch (ApplicationException ex)
                 {
                     TempData["Error"] = ex.Message;
+                    _logger.LogError(ex, "There was an error creating the ticket record.");
                     return View(m);
                 }
             }
@@ -197,7 +199,7 @@ namespace XraySocialClub.Areas.Administration.Controllers
             
             catch (ApplicationException ex)
             {
-                TempData["Error"] = ex.Message;    
+                TempData["Error"] = ex.Message;
             }
 
             return View();

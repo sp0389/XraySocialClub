@@ -61,6 +61,7 @@ namespace XraySocialClub.Areas.Administration.Controllers
                 catch (ApplicationException ex)
                 {
                     TempData["Error"] = ex.Message;
+                    _logger.LogError(ex, "There was an error trying to create a payment record.");
                     return View(m);
                 }
             }
