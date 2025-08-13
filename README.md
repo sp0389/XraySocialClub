@@ -15,6 +15,7 @@ It is designed to be intutive and easy to use.
 - Microsoft SQL Server
 - LINQ
 - Bootstrap
+- Cloudinary
   
 ## Requirements
 - .NET 9 SDK
