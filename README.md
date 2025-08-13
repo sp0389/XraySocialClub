@@ -41,6 +41,7 @@ dotnet run
 ```
 dotnet publish -c Release
 ```
+Deploy to Azure, IIS, or containerize with Docker.
 ## Contributing
 
 1. Fork the repository.
