@@ -2,12 +2,20 @@
 Xray Social Club is a member, payment & purchase tracking application I made for a social club to reduce the reliance on Excel spreadsheets and manual paper records. 
 It is designed to be intutive and easy to use.
 
-## Overview
+## Features
  - Create board announcements / comment on existing announcements
  - Register new members
  - Update and assign roles
  - Create club purchase records
 
+## Technology Stack Used
+- ASP.NET Core MVC
+- Entity Framework Core
+- Identity Framework
+- Microsoft SQL Server
+- LINQ
+- Bootstrap
+  
 ## Requirements
 - .NET 9 SDK
 - SQL Server
